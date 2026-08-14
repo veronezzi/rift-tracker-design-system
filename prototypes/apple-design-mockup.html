@@ -155,7 +155,6 @@
     height: 46px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 0 16px;
     z-index: 30;
     background: rgba(11, 15, 26, 0);
@@ -165,10 +164,21 @@
   }
 
   .topbar.is-materialized {
-    background: rgba(11, 15, 26, 0.6);
+    background: rgba(11, 15, 26, 0.68);
     backdrop-filter: blur(18px) saturate(160%);
     border-bottom: 1px solid var(--app-hairline);
   }
+
+  .topbar-row {
+    display: none;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .topbar[data-mode="search"] .topbar-row-search { display: flex; }
+  .topbar[data-mode="detail"] .topbar-row-detail { display: flex; }
 
   .topbar-title {
     font-size: 0.9rem;
@@ -198,6 +208,29 @@
   .refresh-btn.is-pressed { transform: scale(0.94); background: var(--app-surface); }
   .refresh-btn svg { transition: transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1); }
   .refresh-btn.is-spinning svg { transform: rotate(360deg); }
+
+  .topbar-back, .topbar-overflow {
+    -webkit-tap-highlight-color: transparent;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--app-fg);
+    border-radius: 8px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 90ms ease-out, background-color 90ms ease-out;
+  }
+
+  .topbar-back.is-pressed, .topbar-overflow.is-pressed { transform: scale(0.88); background: var(--app-surface-2); }
+
+  .topbar-detail-title { flex: 1; min-width: 0; text-align: center; }
+  .topbar-detail-name { font-size: 0.82rem; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .topbar-detail-region { font-size: 0.6rem; color: var(--app-muted); margin-top: 1px; }
 
   .screen-scroll {
     position: absolute;
@@ -282,202 +315,133 @@
     color: #0b0f1a;
   }
 
+  .rank-pill.is-small { font-size: 0.56rem; padding: 1px 6px; }
+
   .chevron { color: var(--app-muted); font-size: 0.9rem; }
 
-  /* ---------------- bottom sheet ---------------- */
+  /* ---------------- profile page ---------------- */
 
-  .scrim {
-    position: absolute;
-    inset: 0;
-    background: #000;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 40;
-  }
-
-  .sheet {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100%;
-    background: rgba(19, 24, 41, 0.86);
-    backdrop-filter: blur(26px) saturate(170%);
-    border-top-left-radius: 22px;
-    border-top-right-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    box-shadow: 0 -20px 50px -20px rgba(0, 0, 0, 0.6);
-    z-index: 50;
-    touch-action: none;
-    display: flex;
-    flex-direction: column;
-    will-change: transform;
-  }
-
-  .sheet-handle-zone {
-    padding: 10px 0 6px;
-    display: flex;
-    justify-content: center;
-    cursor: grab;
-    flex: none;
-  }
-
-  .sheet-handle {
-    width: 36px;
-    height: 4px;
-    border-radius: 3px;
-    background: var(--app-muted);
-    transition: transform 120ms ease, background-color 120ms ease;
-  }
-
-  .sheet-handle-zone.is-active .sheet-handle {
-    background: var(--app-fg);
-    transform: scaleX(1.15);
-  }
-
-  .sheet-header {
+  .profile-header {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 0 18px 14px;
-    flex: none;
   }
 
-  .sheet-avatar {
-    width: 46px;
-    height: 46px;
-    border-radius: 13px;
-    background: linear-gradient(155deg, var(--app-surface-2), var(--app-surface));
+  .profile-avatar-wrap { position: relative; flex: none; }
+
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: var(--app-surface-2) center / cover no-repeat;
+    border: 1px solid var(--app-hairline);
+  }
+
+  .profile-level {
+    position: absolute;
+    right: -6px;
+    bottom: -6px;
+    background: var(--app-accent);
+    color: var(--app-accent-fg);
+    font-size: 0.56rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 7px;
+    border: 2px solid var(--app-bg);
+  }
+
+  .profile-name { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
+  .profile-tag { font-size: 0.7rem; color: var(--app-muted); margin-top: 2px; }
+
+  .favorite-btn {
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    background: transparent;
+    border: 1px solid var(--app-hairline);
+    color: var(--app-fg);
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 7px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 90ms ease-out, border-color 140ms ease;
+  }
+
+  .favorite-btn.is-pressed { transform: scale(0.95); }
+  .favorite-btn.is-active { border-color: var(--app-accent); color: var(--app-accent); }
+  .favorite-btn svg { transition: fill 140ms ease; }
+  .favorite-btn.is-active svg { fill: var(--app-accent); }
+
+  .ranked-card {
+    margin-top: 16px;
+    background: var(--app-surface);
+    border: 1px solid var(--app-hairline);
+    border-radius: 14px;
+    padding: 14px;
+  }
+
+  .ranked-row { display: flex; align-items: center; gap: 10px; }
+
+  .ranked-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: var(--app-surface-2);
     border: 1px solid var(--app-hairline);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 700;
-    font-size: 1.05rem;
     flex: none;
-  }
-
-  .sheet-name {
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-  }
-
-  .sheet-sub {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 3px;
-    font-size: 0.68rem;
     color: var(--app-muted);
-    font-weight: 500;
   }
 
-  .sheet-hint {
-    margin-left: auto;
-    font-size: 0.62rem;
+  .ranked-info { flex: 1; min-width: 0; }
+  .ranked-queue { font-size: 0.64rem; color: var(--app-muted); }
+  .ranked-tier-row { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+  .hot-streak { font-size: 0.72rem; }
+  .ranked-lp { font-size: 0.8rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .ranked-record {
+    font-size: 0.64rem;
     color: var(--app-muted);
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    text-align: right;
-    max-width: 80px;
-    line-height: 1.3;
-  }
-
-  .sheet-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 4px 18px 28px;
-  }
-
-  .stat-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 18px;
-  }
-
-  .stat-card {
-    background: var(--app-surface);
-    border: 1px solid var(--app-hairline);
-    border-radius: 12px;
-    padding: 10px 8px;
-    text-align: center;
-  }
-
-  .stat-value {
-    font-size: 1.05rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    margin-top: 10px;
     font-variant-numeric: tabular-nums;
   }
 
-  .stat-label {
-    font-size: 0.58rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--app-muted);
-    margin-top: 2px;
-  }
-
-  .match-row {
+  .winrate-bar {
     display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 9px 0;
-    border-bottom: 1px solid var(--app-hairline);
-  }
-
-  .match-result {
-    width: 4px;
-    align-self: stretch;
+    height: 6px;
     border-radius: 3px;
-    flex: none;
+    overflow: hidden;
+    margin-top: 6px;
+    background: var(--loss);
   }
 
-  .match-result.win { background: var(--win); }
-  .match-result.loss { background: var(--loss); }
+  .winrate-fill.win { background: var(--win); }
 
-  .champ-badge {
-    width: 30px;
-    height: 30px;
-    border-radius: 9px;
-    background: var(--app-surface-2) center / cover no-repeat;
-    border: 1px solid var(--app-hairline);
-    flex: none;
+  .winrate-label {
+    font-size: 0.62rem;
+    color: var(--win);
+    font-weight: 600;
+    margin-top: 6px;
   }
 
-  .champ-card .champ-badge {
-    width: 40px;
-    height: 40px;
-    border-radius: 11px;
-    margin-bottom: 6px;
+  .ranked-row-secondary {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--app-hairline);
   }
 
-  .match-meta { flex: 1; min-width: 0; }
-  .match-champ { font-size: 0.76rem; font-weight: 600; }
-  .match-detail { font-size: 0.63rem; color: var(--app-muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
-  .match-side { text-align: right; flex: none; }
-  .match-kda { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .match-kda .neutral { color: var(--app-muted); font-weight: 500; }
-  .match-cs { font-size: 0.6rem; color: var(--app-muted); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .ranked-queue-small { flex: 1; font-size: 0.68rem; color: var(--app-muted); }
+  .ranked-lp-small { font-size: 0.68rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 
-  /* rank/LP summary line under the sheet name */
-  .rank-summary {
-    font-size: 0.68rem;
-    color: var(--app-muted);
-    font-variant-numeric: tabular-nums;
-    margin-top: 3px;
-  }
-  .rank-summary strong {
-    color: var(--app-fg);
-    font-weight: 700;
-  }
-
-  /* horizontally-scrolling cards: roles, top champions — native momentum
-     scroll, nothing hand-rolled, per apple-design "reach for native physics
-     before reimplementing it" */
+  /* horizontally-scrolling cards: champs mini row, top champions, roles —
+     native momentum scroll, nothing hand-rolled, per apple-design "reach
+     for native physics before reimplementing it" */
   .hscroll {
     display: flex;
     gap: 8px;
@@ -491,7 +455,7 @@
   }
   .hscroll::-webkit-scrollbar { display: none; }
 
-  .role-card, .champ-card {
+  .role-card, .champ-card, .champ-mini {
     scroll-snap-align: start;
     flex: none;
     background: var(--app-surface);
@@ -502,23 +466,23 @@
     transform: scale(1);
     transition: transform 90ms ease-out, background-color 90ms ease-out;
   }
-  .role-card.is-pressed, .champ-card.is-pressed { transform: scale(0.96); background: var(--app-surface-2); }
+  .role-card.is-pressed, .champ-card.is-pressed, .champ-mini.is-pressed { transform: scale(0.96); background: var(--app-surface-2); }
 
-  .role-name, .champ-name {
+  .role-name, .champ-name, .champ-mini-name {
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: -0.005em;
     white-space: nowrap;
   }
-  .role-wr, .champ-wr {
+  .role-wr, .champ-wr, .champ-mini-wr {
     font-size: 0.92rem;
     font-weight: 700;
     letter-spacing: -0.015em;
     font-variant-numeric: tabular-nums;
     margin-top: 4px;
   }
-  .role-wr.is-high, .champ-wr.is-high { color: var(--win); }
-  .role-record, .champ-record {
+  .role-wr.is-high, .champ-wr.is-high, .champ-mini-wr.is-high { color: var(--win); }
+  .role-record, .champ-record, .champ-mini-games {
     font-size: 0.58rem;
     color: var(--app-muted);
     font-variant-numeric: tabular-nums;
@@ -531,6 +495,151 @@
     margin-top: 5px;
     padding-top: 5px;
     border-top: 1px solid var(--app-hairline);
+  }
+
+  .champ-badge {
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    background: var(--app-surface-2) center / cover no-repeat;
+    border: 1px solid var(--app-hairline);
+    flex: none;
+  }
+
+  .champ-card .champ-badge, .champ-mini .champ-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    margin-bottom: 6px;
+  }
+
+  /* match history cards — border color IS the result, no separate icon needed */
+  .match-card {
+    -webkit-tap-highlight-color: transparent;
+    background: var(--app-surface);
+    border: 1.5px solid var(--app-hairline);
+    border-radius: 14px;
+    padding: 11px 13px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 90ms ease-out;
+  }
+  .match-card.is-pressed { transform: scale(0.98); }
+  .match-card.win { border-color: var(--win); }
+  .match-card.loss { border-color: var(--loss); }
+
+  .match-card-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 9px; }
+  .match-result-label { font-size: 0.74rem; font-weight: 700; }
+  .match-card.win .match-result-label { color: var(--win); }
+  .match-card.loss .match-result-label { color: var(--loss); }
+  .match-card-meta { font-size: 0.6rem; color: var(--app-muted); font-variant-numeric: tabular-nums; }
+
+  .match-card-mid { display: flex; align-items: center; gap: 10px; }
+  .match-card-info { flex: 1; min-width: 0; }
+  .match-card-farm { font-size: 0.68rem; font-variant-numeric: tabular-nums; }
+  .match-card-time { font-size: 0.6rem; color: var(--app-muted); margin-top: 2px; }
+  .match-card-pdl { font-size: 0.72rem; font-weight: 700; color: var(--app-accent); font-variant-numeric: tabular-nums; flex: none; }
+
+  .match-card-bottom {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 9px;
+    padding-top: 9px;
+    border-top: 1px solid var(--app-hairline);
+  }
+  .match-card-kda-nums { font-size: 0.7rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .match-card-kda-value { font-size: 0.7rem; font-weight: 700; color: var(--app-accent); font-variant-numeric: tabular-nums; }
+
+  /* skeletons: shapes that mirror the real layout, not generic bars —
+     so the loading state reads as "this specific screen", not a blank wait */
+  .sk-avatar, .sk-line, .sk-block {
+    background: linear-gradient(90deg, var(--app-surface) 0%, var(--app-surface-2) 50%, var(--app-surface) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.3s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sk-avatar, .sk-line, .sk-block { animation: none; background: var(--app-surface); }
+  }
+
+  .sk-avatar { width: 34px; height: 34px; flex: none; border-radius: 10px; }
+  .sk-lines { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+  .sk-line { height: 9px; border-radius: 5px; }
+  .sk-line.w55 { width: 55%; }
+  .sk-line.w30 { width: 30%; }
+  .sk-block { border-radius: 14px; }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .skeleton-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; }
+
+  /* ---------------- full-page states: carregando / offline / não encontrado ---------------- */
+
+  .status-block {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+    padding: 0 28px;
+  }
+
+  .status-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: var(--app-surface);
+    border: 1px solid var(--app-hairline);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--app-muted);
+  }
+
+  .status-title { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.01em; }
+  .status-body { font-size: 0.76rem; line-height: 1.5; color: var(--app-muted); max-width: 22ch; }
+
+  .status-btn {
+    -webkit-tap-highlight-color: transparent;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--app-accent);
+    color: var(--app-accent-fg);
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 100ms ease-out;
+  }
+  .status-btn.is-pressed { transform: scale(0.95); }
+
+  /* app-state crossfade — the same "materialize" transition drives every
+     destination change (search <-> profile <-> champions <-> error states),
+     so the app has one consistent motion language instead of a special
+     case per screen (spatial-consistency, apple-design §7) */
+  .app-state {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+    transition: opacity 220ms ease, transform 220ms ease;
+    pointer-events: none;
+  }
+  .app-state.is-current { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    .app-state { transition: opacity 160ms linear; transform: none; }
   }
 
   /* bottom nav: translucent chrome, content scrolls under it (materials
@@ -560,18 +669,12 @@
     transform: scale(1);
     transition: transform 90ms ease-out, color 140ms ease;
   }
-
   .nav-tab.is-current { color: var(--app-accent); }
   .nav-tab.is-pressed { transform: scale(0.93); }
   .nav-tab span { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.01em; }
 
-  /* champion grid */
-  .champ-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-top: 4px;
-  }
+  /* champion grid + build */
+  .champ-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 4px; }
 
   .champ-cell {
     -webkit-tap-highlight-color: transparent;
@@ -587,29 +690,12 @@
     transform: scale(1);
     transition: transform 90ms ease-out, background-color 90ms ease-out;
   }
-
   .champ-cell.is-pressed { transform: scale(0.94); background: var(--app-surface); }
   .champ-cell.is-selected { background: var(--app-surface); }
+  .champ-cell .champ-badge { width: 48px; height: 48px; border-radius: 13px; }
+  .champ-cell.is-selected .champ-badge { border-color: var(--app-accent); border-width: 2px; }
+  .champ-cell-name { font-size: 0.6rem; font-weight: 600; text-align: center; line-height: 1.2; }
 
-  .champ-cell .champ-badge {
-    width: 48px;
-    height: 48px;
-    border-radius: 13px;
-  }
-
-  .champ-cell.is-selected .champ-badge {
-    border-color: var(--app-accent);
-    border-width: 2px;
-  }
-
-  .champ-cell-name {
-    font-size: 0.6rem;
-    font-weight: 600;
-    text-align: center;
-    line-height: 1.2;
-  }
-
-  /* build panel: materializes (fade + slight rise) when a champion is picked */
   .build-panel {
     margin-top: 18px;
     padding: 16px;
@@ -620,26 +706,13 @@
     transform: translateY(6px);
     transition: opacity 200ms ease, transform 200ms ease;
   }
-
   .build-panel.is-visible { opacity: 1; transform: translateY(0); }
-
-  .build-empty {
-    padding: 28px 16px;
-    text-align: center;
-    font-size: 0.72rem;
-    color: var(--app-muted);
-  }
-
+  .build-empty { padding: 28px 16px; text-align: center; font-size: 0.72rem; color: var(--app-muted); }
   .build-header { display: flex; align-items: center; gap: 10px; }
   .build-header .champ-badge { width: 44px; height: 44px; border-radius: 12px; }
   .build-title { font-size: 0.9rem; font-weight: 700; letter-spacing: -0.01em; }
   .build-role { font-size: 0.62rem; color: var(--app-muted); margin-top: 2px; }
-
-  .build-items {
-    display: flex;
-    gap: 8px;
-    margin-top: 14px;
-  }
+  .build-items { display: flex; gap: 8px; margin-top: 14px; }
 
   .build-item {
     -webkit-tap-highlight-color: transparent;
@@ -654,77 +727,54 @@
     transform: scale(1);
     transition: transform 90ms ease-out;
   }
-
   .build-item.is-pressed { transform: scale(0.9); }
+  .build-item-icon { width: 34px; height: 34px; border-radius: 9px; background: var(--app-surface-2) center / cover no-repeat; border: 1px solid var(--app-hairline); }
+  .build-item-name { font-size: 0.5rem; color: var(--app-muted); text-align: center; line-height: 1.2; min-height: 2.2em; }
 
-  .build-item-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
-    background: var(--app-surface-2) center / cover no-repeat;
-    border: 1px solid var(--app-hairline);
-  }
+  /* ---------------- switcher (demo control, not part of the app) ---------------- */
 
-  .build-item-name {
-    font-size: 0.5rem;
-    color: var(--app-muted);
-    text-align: center;
-    line-height: 1.2;
-    min-height: 2.2em;
+  .switcher {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    background: var(--stage-border);
+    padding: 3px;
+    border-radius: 11px;
+    margin-top: 22px;
+    width: 300px;
+    max-width: 100%;
   }
+  .switcher button {
+    flex: 1;
+    min-width: 30%;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 4px;
+    font: inherit;
+    font-size: 0.64rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--page-muted);
+    cursor: pointer;
+    transition: transform 90ms ease-out, background-color 140ms ease, color 140ms ease;
+  }
+  .switcher button.is-active { background: var(--page-bg); color: var(--page-fg); }
+  .switcher button.is-pressed { transform: scale(0.95); }
 
   /* ---------------- notes column ---------------- */
 
-  .notes {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border-top: 1px solid var(--hairline);
-  }
-
-  .note {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--hairline);
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 14px;
-  }
-
+  .notes { display: flex; flex-direction: column; gap: 0; border-top: 1px solid var(--hairline); }
+  .note { padding: 20px 0; border-bottom: 1px solid var(--hairline); display: grid; grid-template-columns: 28px 1fr; gap: 14px; }
   .note-mark {
-    width: 22px;
-    height: 22px;
-    border-radius: 6px;
-    background: var(--page-fg);
-    color: var(--page-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.68rem;
-    font-weight: 700;
+    width: 22px; height: 22px; border-radius: 6px;
+    background: var(--page-fg); color: var(--page-bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.68rem; font-weight: 700;
   }
-
-  .note h3 {
-    margin: 0 0 4px;
-    font-size: 0.98rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  .note p {
-    margin: 0;
-    font-size: 0.88rem;
-    line-height: 1.55;
-    color: var(--page-muted);
-    max-width: 56ch;
-  }
-
-  .note code {
-    font-family: ui-monospace, "SF Mono", Menlo, monospace;
-    font-size: 0.85em;
-    background: var(--hairline);
-    padding: 1px 5px;
-    border-radius: 4px;
-  }
+  .note h3 { margin: 0 0 4px; font-size: 0.98rem; font-weight: 700; letter-spacing: -0.01em; }
+  .note p { margin: 0; font-size: 0.88rem; line-height: 1.55; color: var(--page-muted); max-width: 56ch; }
+  .note code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.85em; background: var(--hairline); padding: 1px 5px; border-radius: 4px; }
 
   footer.credits {
     margin-top: 48px;
@@ -737,156 +787,18 @@
     flex-wrap: wrap;
     gap: 8px;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sheet { transition: transform 200ms ease; }
-  }
-
-  /* ---------------- state switcher + secondary screens ---------------- */
-
-  .switcher {
-    display: flex;
-    gap: 4px;
-    background: var(--stage-border);
-    padding: 3px;
-    border-radius: 11px;
-    margin-top: 22px;
-    width: 300px;
-    max-width: 100%;
-  }
-
-  .switcher button {
-    flex: 1;
-    background: transparent;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 4px;
-    font: inherit;
-    font-size: 0.66rem;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    color: var(--page-muted);
-    cursor: pointer;
-    transition: transform 90ms ease-out, background-color 140ms ease, color 140ms ease;
-  }
-
-  .switcher button.is-active {
-    background: var(--page-bg);
-    color: var(--page-fg);
-  }
-
-  .switcher button.is-pressed { transform: scale(0.95); }
-
-  .app-state {
-    opacity: 0;
-    transform: translateY(8px) scale(0.985);
-    transition: opacity 220ms ease, transform 220ms ease;
-    pointer-events: none;
-  }
-
-  .app-state.is-current {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .app-state { transition: opacity 160ms linear; transform: none; }
-  }
-
-  .skeleton-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 8px;
-  }
-
-  .sk-avatar, .sk-line {
-    border-radius: 8px;
-    background: linear-gradient(90deg, var(--app-surface) 0%, var(--app-surface-2) 50%, var(--app-surface) 100%);
-    background-size: 200% 100%;
-    animation: shimmer 1.3s ease-in-out infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sk-avatar, .sk-line { animation: none; background: var(--app-surface); }
-  }
-
-  .sk-avatar { width: 34px; height: 34px; flex: none; border-radius: 10px; }
-  .sk-lines { flex: 1; display: flex; flex-direction: column; gap: 7px; }
-  .sk-line { height: 9px; border-radius: 5px; }
-  .sk-line.w55 { width: 55%; }
-  .sk-line.w30 { width: 30%; }
-
-  @keyframes shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-
-  .status-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 12px;
-    padding: 60px 12px 0;
-  }
-
-  .status-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
-    background: var(--app-surface);
-    border: 1px solid var(--app-hairline);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--app-muted);
-  }
-
-  .status-title {
-    font-size: 0.98rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  .status-body {
-    font-size: 0.76rem;
-    line-height: 1.5;
-    color: var(--app-muted);
-    max-width: 22ch;
-  }
-
-  .status-btn {
-    -webkit-tap-highlight-color: transparent;
-    margin-top: 4px;
-    background: var(--app-accent);
-    color: var(--app-accent-fg);
-    border: none;
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    cursor: pointer;
-    transform: scale(1);
-    transition: transform 100ms ease-out;
-  }
-
-  .status-btn.is-pressed { transform: scale(0.95); }
 </style>
 
 <div class="wrap">
   <header class="top">
-    <span class="eyebrow">Conceito de interação — não é código Android</span>
+    <span class="eyebrow">Conceito de navegação — não é código Android</span>
     <h1>Rift Tracker, com jeitão Apple</h1>
     <p class="dek">
-      Aplicando a skill <strong>apple-design</strong> a um fluxo real do app: arraste
-      o cartão do invocador pra cima ou pra baixo — ele segue o dedo 1:1, projeta a
-      velocidade do gesto pra decidir onde encaixar, e pode ser agarrado no meio do
-      movimento sem esperar a animação terminar. Os botões abaixo do celular trocam
-      entre os quatro estados da tela de busca (as mesmas capturas que você mandou).
+      Aplicando a skill <strong>apple-design</strong> a três destinos reais do app:
+      busca, perfil (página cheia, não mais um cartão) e campeões. Troque de tela
+      pela barra inferior ou tocando numa busca recente — a transição é sempre a
+      mesma "materialização" (opacidade + leve deslocamento), então o app tem uma
+      única linguagem de movimento, não uma por tela.
     </p>
   </header>
 
@@ -898,14 +810,29 @@
           <span>●●●●</span>
         </div>
 
-        <div class="topbar" id="topbar">
-          <span class="topbar-title">Rift Tracker</span>
-          <button class="refresh-btn" id="refreshBtn">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg>
-            Atualizar
-          </button>
+        <div class="topbar" id="topbar" data-mode="search">
+          <div class="topbar-row topbar-row-search">
+            <span class="topbar-title">Rift Tracker</span>
+            <button class="refresh-btn" id="refreshBtn">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg>
+              Atualizar
+            </button>
+          </div>
+          <div class="topbar-row topbar-row-detail">
+            <button class="topbar-back" id="topbarBack">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <div class="topbar-detail-title">
+              <div class="topbar-detail-name" id="topbarName">Faker#KR1</div>
+              <div class="topbar-detail-region" id="topbarRegion">KR</div>
+            </div>
+            <button class="topbar-overflow" id="topbarOverflow">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>
+            </button>
+          </div>
         </div>
 
+        <!-- BUSCA -->
         <div class="screen-scroll app-state is-current" data-state="search" id="stateSearch">
           <div class="search-field">
             <span>⌕</span>
@@ -914,7 +841,7 @@
 
           <div class="section-label">Buscas recentes</div>
 
-          <div class="list-row" data-name="Faker#KR1" data-region="KR" data-rank="Diamante" data-rank-color="var(--rank-diamond)" data-initial="F">
+          <div class="list-row" data-name="Faker#KR1" data-region="KR" data-rank="Diamante II" data-rank-color="var(--rank-diamond)" data-initial="F">
             <div class="avatar">F</div>
             <div class="row-meta">
               <div class="row-name">Faker#KR1</div>
@@ -922,7 +849,7 @@
             </div>
             <span class="chevron">›</span>
           </div>
-          <div class="list-row" data-name="brTP Caps#EUW" data-region="EUW" data-rank="Esmeralda" data-rank-color="var(--rank-emerald)" data-initial="B">
+          <div class="list-row" data-name="brTP Caps#EUW" data-region="EUW" data-rank="Esmeralda IV" data-rank-color="var(--rank-emerald)" data-initial="B">
             <div class="avatar">B</div>
             <div class="row-meta">
               <div class="row-name">brTP Caps#EUW</div>
@@ -956,6 +883,7 @@
           </div>
         </div>
 
+        <!-- CARREGANDO (busca) -->
         <div class="screen-scroll app-state" data-state="loading" id="stateLoading">
           <div class="search-field">
             <span>⌕</span>
@@ -969,35 +897,167 @@
           <div class="skeleton-row"><div class="sk-avatar"></div><div class="sk-lines"><div class="sk-line w55"></div><div class="sk-line w30"></div></div></div>
         </div>
 
-        <div class="screen-scroll app-state" data-state="offline" id="stateOffline">
-          <div class="search-field">
-            <span>⌕</span>
-            <input type="text" value="Faker#KR1" readonly />
+        <!-- PERFIL -->
+        <div class="screen-scroll app-state" data-state="profile" id="stateProfile">
+          <div class="profile-header">
+            <div class="profile-avatar-wrap">
+              <div class="profile-avatar" id="profileAvatar" data-champ="Azir"></div>
+              <div class="profile-level">743</div>
+            </div>
+            <div>
+              <div class="profile-name" id="profileName">Faker</div>
+              <div class="profile-tag" id="profileTag">#KR1 · KR</div>
+            </div>
           </div>
+
+          <button class="favorite-btn" id="favoriteBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 17.3 6.2 21l1.5-6.6L2.5 9.8l6.7-.6L12 3l2.8 6.2 6.7.6-5.2 4.6L18 21z"/></svg>
+            Favoritar
+          </button>
+
+          <div class="ranked-card">
+            <div class="ranked-row">
+              <div class="ranked-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5z"/></svg>
+              </div>
+              <div class="ranked-info">
+                <div class="ranked-queue">Ranqueada Solo/Duo</div>
+                <div class="ranked-tier-row">
+                  <span class="rank-pill" style="background:var(--rank-diamond)">Diamante II</span>
+                  <span class="hot-streak" title="Sequência de vitórias">🔥</span>
+                </div>
+              </div>
+              <div class="ranked-lp">68 PDL</div>
+            </div>
+            <div class="ranked-record">142V 118D · 260 partidas</div>
+            <div class="winrate-bar"><div class="winrate-fill win" style="flex:55"></div><div class="winrate-fill loss" style="flex:45"></div></div>
+            <div class="winrate-label">↗ 55% de vitórias</div>
+
+            <div class="ranked-row ranked-row-secondary">
+              <div class="ranked-queue-small">Flexível 5v5</div>
+              <span class="rank-pill is-small" style="background:var(--rank-emerald)">Esmeralda IV</span>
+              <div class="ranked-lp-small">31 PDL</div>
+            </div>
+          </div>
+
+          <div class="section-label">Campeões mais jogados</div>
+          <div class="hscroll">
+            <div class="champ-mini">
+              <div class="champ-badge" data-champ="Azir"></div>
+              <div class="champ-mini-name">Azir</div>
+              <div class="champ-mini-wr is-high">61% WR</div>
+              <div class="champ-mini-games">46 jogos</div>
+            </div>
+            <div class="champ-mini">
+              <div class="champ-badge" data-champ="Orianna"></div>
+              <div class="champ-mini-name">Orianna</div>
+              <div class="champ-mini-wr is-high">57% WR</div>
+              <div class="champ-mini-games">38 jogos</div>
+            </div>
+            <div class="champ-mini">
+              <div class="champ-badge" data-champ="Ahri"></div>
+              <div class="champ-mini-name">Ahri</div>
+              <div class="champ-mini-wr is-high">52% WR</div>
+              <div class="champ-mini-games">29 jogos</div>
+            </div>
+          </div>
+
+          <div class="section-label">Últimas 10 partidas</div>
+
+          <div class="match-card win">
+            <div class="match-card-top"><span class="match-result-label">Vitória</span><span class="match-card-meta">Ranked Solo · 32:54</span></div>
+            <div class="match-card-mid">
+              <div class="champ-badge" data-champ="Azir"></div>
+              <div class="match-card-info">
+                <div class="match-card-farm">342 farm (10.4/min)</div>
+                <div class="match-card-time">há 32 min</div>
+              </div>
+              <div class="match-card-pdl">+21 PDL</div>
+            </div>
+            <div class="match-card-bottom"><span class="match-card-kda-nums">11 / 3 / 9</span><span class="match-card-kda-value">6.67 KDA</span></div>
+          </div>
+
+          <div class="match-card loss">
+            <div class="match-card-top"><span class="match-result-label">Derrota</span><span class="match-card-meta">Ranked Solo · 33:08</span></div>
+            <div class="match-card-mid">
+              <div class="champ-badge" data-champ="Orianna"></div>
+              <div class="match-card-info">
+                <div class="match-card-farm">298 farm (9.0/min)</div>
+                <div class="match-card-time">há 1h</div>
+              </div>
+              <div class="match-card-pdl">-18 PDL</div>
+            </div>
+            <div class="match-card-bottom"><span class="match-card-kda-nums">4 / 6 / 8</span><span class="match-card-kda-value">2.00 KDA</span></div>
+          </div>
+
+          <div class="match-card win">
+            <div class="match-card-top"><span class="match-result-label">Vitória</span><span class="match-card-meta">Ranked Solo · 24:12</span></div>
+            <div class="match-card-mid">
+              <div class="champ-badge" data-champ="Ahri"></div>
+              <div class="match-card-info">
+                <div class="match-card-farm">251 farm (10.4/min)</div>
+                <div class="match-card-time">há 3h</div>
+              </div>
+              <div class="match-card-pdl">+23 PDL</div>
+            </div>
+            <div class="match-card-bottom"><span class="match-card-kda-nums">9 / 1 / 6</span><span class="match-card-kda-value">15.0 KDA</span></div>
+          </div>
+        </div>
+
+        <!-- PERFIL CARREGANDO -->
+        <div class="screen-scroll app-state" data-state="profile-loading" id="stateProfileLoading">
+          <div class="profile-header">
+            <div class="sk-avatar" style="width:60px;height:60px;border-radius:16px;"></div>
+            <div class="sk-lines" style="gap:8px;">
+              <div class="sk-line w55" style="height:14px;"></div>
+              <div class="sk-line w30"></div>
+            </div>
+          </div>
+          <div class="sk-block" style="height:36px;width:110px;margin-top:12px;"></div>
+          <div class="sk-block" style="height:118px;margin-top:16px;"></div>
+          <div class="section-label" style="opacity:0.5;">Campeões mais jogados</div>
+          <div class="hscroll">
+            <div class="sk-block" style="height:88px;width:92px;flex:none;"></div>
+            <div class="sk-block" style="height:88px;width:92px;flex:none;"></div>
+            <div class="sk-block" style="height:88px;width:92px;flex:none;"></div>
+          </div>
+          <div class="section-label" style="opacity:0.5;">Últimas 10 partidas</div>
+          <div class="sk-block" style="height:78px;margin-bottom:10px;"></div>
+          <div class="sk-block" style="height:78px;margin-bottom:10px;"></div>
+          <div class="sk-block" style="height:78px;"></div>
+        </div>
+
+        <!-- OFFLINE: página inteira, sem busca/regiões por cima -->
+        <div class="app-state" data-state="offline" id="stateOffline">
           <div class="status-block">
             <div class="status-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 3l18 18M8.5 16.5a5 5 0 0 1 7 0M5 12.5a10 10 0 0 1 3-2.1M19 12.5a10 10 0 0 0-2.4-2.7M12 20h.01"/></svg>
             </div>
             <div class="status-title">Sem conexão</div>
             <div class="status-body">Não foi possível falar com os servidores da Riot. Verifique sua internet e tente novamente.</div>
-            <button class="status-btn" id="retryBtn">Tentar novamente</button>
+            <button class="status-btn" id="retryBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg>
+              Tentar novamente
+            </button>
           </div>
         </div>
 
-        <div class="screen-scroll app-state" data-state="notfound" id="stateNotfound">
-          <div class="search-field">
-            <span>⌕</span>
-            <input type="text" value="Faker#KR1" readonly />
-          </div>
+        <!-- INVOCADOR NÃO ENCONTRADO: página inteira, dentro do contexto de perfil -->
+        <div class="app-state" data-state="notfound" id="stateNotfound">
           <div class="status-block">
             <div class="status-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="8" r="3.4"/><path d="M3.5 19c.7-3.4 3-5 5.5-5s4.8 1.6 5.5 5M17 8l4 4M21 8l-4 4"/></svg>
             </div>
             <div class="status-title">Invocador não encontrado</div>
-            <div class="status-body">Nenhuma conta "Faker#KR1" na região KR.</div>
+            <div class="status-body">Esta conta pode ter sido renomeada ou está em outra região.</div>
+            <button class="status-btn" id="backToSearchBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Voltar à busca
+            </button>
           </div>
         </div>
 
+        <!-- CAMPEÕES -->
         <div class="screen-scroll app-state" data-state="champions" id="stateChampions">
           <div class="search-field">
             <span>⌕</span>
@@ -1013,6 +1073,10 @@
 
         <div class="bottom-nav">
           <button class="nav-tab is-current" data-goto="search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <span>Buscar</span>
+          </button>
+          <button class="nav-tab" data-goto="profile">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="8" r="4"/></svg>
             <span>Perfil</span>
           </button>
@@ -1021,115 +1085,13 @@
             <span>Campeões</span>
           </button>
         </div>
-
-        <div class="scrim" id="scrim"></div>
-
-        <div class="sheet" id="sheet">
-          <div class="sheet-handle-zone" id="handleZone">
-            <div class="sheet-handle"></div>
-          </div>
-          <div class="sheet-header">
-            <div class="sheet-avatar" id="sheetAvatar">F</div>
-            <div>
-              <div class="sheet-name" id="sheetName">Faker#KR1</div>
-              <div class="sheet-sub"><span id="sheetRegion">KR</span> · <span id="sheetRank">Diamante</span></div>
-              <div class="rank-summary"><strong>78 LP</strong> · 62% WR · 92 partidas</div>
-            </div>
-            <div class="sheet-hint">Arraste pra ver mais ↑</div>
-          </div>
-          <div class="sheet-body">
-            <div class="stat-row">
-              <div class="stat-card"><div class="stat-value">62%</div><div class="stat-label">Vitórias</div></div>
-              <div class="stat-card"><div class="stat-value">4.8</div><div class="stat-label">KDA médio</div></div>
-              <div class="stat-card"><div class="stat-value">213</div><div class="stat-label">Partidas</div></div>
-            </div>
-
-            <div class="section-label">Rotas</div>
-            <div class="hscroll">
-              <div class="role-card">
-                <div class="role-name">Meio</div>
-                <div class="role-wr is-high">57%</div>
-                <div class="role-record">39V 29D</div>
-                <div class="role-kda">KDA 2.5</div>
-              </div>
-              <div class="role-card">
-                <div class="role-name">Selva</div>
-                <div class="role-wr is-high">71%</div>
-                <div class="role-record">5V 2D</div>
-                <div class="role-kda">KDA 4.2</div>
-              </div>
-              <div class="role-card">
-                <div class="role-name">Atirador</div>
-                <div class="role-wr is-high">57%</div>
-                <div class="role-record">4V 3D</div>
-                <div class="role-kda">KDA 2.4</div>
-              </div>
-            </div>
-
-            <div class="section-label">Campeões mais jogados</div>
-            <div class="hscroll">
-              <div class="champ-card">
-                <div class="champ-badge" data-champ="Cassiopeia"></div>
-                <div class="champ-name">Cassiopeia</div>
-                <div class="champ-wr is-high">57%</div>
-                <div class="champ-record">12V 9D</div>
-                <div class="champ-kda">KDA 2.4</div>
-              </div>
-              <div class="champ-card">
-                <div class="champ-badge" data-champ="Viktor"></div>
-                <div class="champ-name">Viktor</div>
-                <div class="champ-wr is-high">67%</div>
-                <div class="champ-record">8V 4D</div>
-                <div class="champ-kda">KDA 3.3</div>
-              </div>
-              <div class="champ-card">
-                <div class="champ-badge" data-champ="Ryze"></div>
-                <div class="champ-name">Ryze</div>
-                <div class="champ-wr is-high">56%</div>
-                <div class="champ-record">5V 4D</div>
-                <div class="champ-kda">KDA 2.3</div>
-              </div>
-            </div>
-
-            <div class="section-label">Últimas partidas</div>
-
-            <div class="match-row">
-              <div class="match-result win"></div>
-              <div class="champ-badge" data-champ="Azir"></div>
-              <div class="match-meta"><div class="match-champ">Azir</div><div class="match-detail">Vitória · 28min</div></div>
-              <div class="match-side"><div class="match-kda">9/2/6</div><div class="match-cs">8.9 CS/min</div></div>
-            </div>
-            <div class="match-row">
-              <div class="match-result win"></div>
-              <div class="champ-badge" data-champ="Orianna"></div>
-              <div class="match-meta"><div class="match-champ">Orianna</div><div class="match-detail">Vitória · 31min</div></div>
-              <div class="match-side"><div class="match-kda">4/1/11</div><div class="match-cs">7.3 CS/min</div></div>
-            </div>
-            <div class="match-row">
-              <div class="match-result loss"></div>
-              <div class="champ-badge" data-champ="Ahri"></div>
-              <div class="match-meta"><div class="match-champ">Ahri</div><div class="match-detail">Derrota · 34min</div></div>
-              <div class="match-side"><div class="match-kda">6/5/4</div><div class="match-cs">6.1 CS/min</div></div>
-            </div>
-            <div class="match-row">
-              <div class="match-result win"></div>
-              <div class="champ-badge" data-champ="Zoe"></div>
-              <div class="match-meta"><div class="match-champ">Zoe</div><div class="match-detail">Vitória · 24min</div></div>
-              <div class="match-side"><div class="match-kda">11/1/7</div><div class="match-cs">9.8 CS/min</div></div>
-            </div>
-            <div class="match-row">
-              <div class="match-result win"></div>
-              <div class="champ-badge" data-champ="TwistedFate"></div>
-              <div class="match-meta"><div class="match-champ">Twisted Fate</div><div class="match-detail">Vitória · 29min</div></div>
-              <div class="match-side"><div class="match-kda">7/3/9</div><div class="match-cs">8.6 CS/min</div></div>
-            </div>
-          </div>
-        </div>
       </div>
 
-      <div class="switcher" id="switcher" role="tablist" aria-label="Estado da tela">
+      <div class="switcher" id="switcher" role="tablist" aria-label="Estado da tela (demo)">
         <button class="is-active" data-goto="search">Busca</button>
-        <button data-goto="loading">Carregando</button>
+        <button data-goto="loading">Carregando busca</button>
+        <button data-goto="profile">Perfil</button>
+        <button data-goto="profile-loading">Carregando perfil</button>
         <button data-goto="offline">Offline</button>
         <button data-goto="notfound">Não encontrado</button>
       </div>
@@ -1140,35 +1102,35 @@
         <div class="note-mark">1</div>
         <div>
           <h3>Resposta no toque, não no clique</h3>
-          <p>O botão "Atualizar" e as linhas da lista reagem em <code>pointerdown</code>, antes de soltar o dedo — <code>:active</code> nunca é suficiente sozinho em toque, então o feedback é disparado manualmente no evento certo.</p>
+          <p>Botão "Atualizar", linhas da lista, cartões de campeão e de partida reagem em <code>pointerdown</code>, antes de soltar o dedo. É a fundação de tudo — sem isso, o resto do motion não convence.</p>
         </div>
       </div>
       <div class="note">
         <div class="note-mark">2</div>
         <div>
-          <h3>O cartão é interruptível</h3>
-          <p>Agarre o cartão no meio de qualquer animação e ele obedece na hora — a queda começa do valor atual na tela (não do alvo), então nunca há salto. Isso é o princípio único mais importante da skill: pensamento e gesto acontecem em paralelo.</p>
+          <h3>Um destino, um caminho de volta</h3>
+          <p>Tocar numa busca recente leva pro Perfil; a seta de voltar leva de volta pra Busca. É sempre o mesmo par entrada/saída — "se algo aparece de um jeito, some do mesmo jeito" (apple-design, consistência espacial).</p>
         </div>
       </div>
       <div class="note">
         <div class="note-mark">3</div>
         <div>
-          <h3>Velocidade decide o destino</h3>
-          <p>Ao soltar, a velocidade do arraste projeta onde o cartão "pousaria" (mesma matemática de desaceleração do scroll) e escolhe o ponto de encaixe mais próximo — não a posição de soltura. Um puxão rápido lança o cartão longe; um solto suave para pertinho.</p>
+          <h3>Estados de erro tomam a tela inteira</h3>
+          <p>Sem conexão e invocador não encontrado não sobram embaixo de uma busca ou de campos vazios — a tela inteira vira a mensagem, com uma ação clara pra sair dali. Isso evita a sensação de "a busca quebrou e ainda está tudo lá em cima".</p>
         </div>
       </div>
       <div class="note">
         <div class="note-mark">4</div>
         <div>
-          <h3>Material, não só cor</h3>
-          <p>O cartão e a barra superior usam <code>backdrop-filter</code> — vidro de verdade, não um fundo opaco. A barra só "materializa" (blur + fundo) quando o cartão sobe o bastante pra precisar dela; o resto do tempo ela é invisível.</p>
+          <h3>Skeleton no formato da tela real</h3>
+          <p>O carregamento do Perfil não é uma lista genérica de barrinhas — é o avatar, o cartão de rank e os cartões de partida já no tamanho e posição finais, só sem conteúdo. Isso é o que faz o "pulo" pro conteúdo real parecer suave.</p>
         </div>
       </div>
     </div>
   </div>
 
   <footer class="credits">
-    <span>Rift Tracker · estudo de interação</span>
+    <span>Rift Tracker · estudo de navegação</span>
     <span>Design system: Apple Design (skill <code>apple-design</code>)</span>
   </footer>
 </div>
@@ -1179,199 +1141,18 @@ var ASSETS = { champ: {"Azir":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIA
 <script>
 (function () {
   var device = document.getElementById('device');
-  var sheet = document.getElementById('sheet');
-  var scrim = document.getElementById('scrim');
-  var handleZone = document.getElementById('handleZone');
   var topbar = document.getElementById('topbar');
   var refreshBtn = document.getElementById('refreshBtn');
 
-  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var H = device.clientHeight;
-  var SNAP = {
-    full: Math.round(H * 0.08),
-    half: Math.round(H * 0.46),
-    peek: Math.round(H * 0.76),
-    hidden: H + 40
-  };
-  var order = ['full', 'half', 'peek', 'hidden'];
-
-  // ---- damped-spring integrator (critically damped by default; bounce on flicks) ----
-  var state = { x: SNAP.peek, v: 0 };
-  var target = SNAP.peek;
-  var damping = 1.0;
-  var response = 0.38;
-  var rafId = null;
-
-  function applyTransform(y) {
-    sheet.style.transform = 'translateY(' + y + 'px)';
-    var openness = 1 - clamp((y - SNAP.full) / (SNAP.hidden - SNAP.full), 0, 1);
-    scrim.style.opacity = String(Math.max(0, (openness - 0.45) / 0.55) * 0.55);
-    scrim.style.pointerEvents = y < SNAP.peek - 4 ? 'auto' : 'none';
-    var materialize = clamp((SNAP.peek - y) / (SNAP.peek - SNAP.half), 0, 1);
-    topbar.classList.toggle('is-materialized', materialize > 0.15);
-  }
-
-  function stepSpring(dt) {
-    var sub = 4;
-    var sdt = dt / sub;
-    for (var i = 0; i < sub; i++) {
-      var omega = 2 * Math.PI / response;
-      var accel = omega * omega * (target - state.x) - 2 * damping * omega * state.v;
-      state.v += accel * sdt;
-      state.x += state.v * sdt;
-    }
-    applyTransform(state.x);
-    if (Math.abs(target - state.x) > 0.5 || Math.abs(state.v) > 4) {
-      rafId = requestAnimationFrame(loop);
-    } else {
-      state.x = target;
-      state.v = 0;
-      applyTransform(state.x);
-      rafId = null;
-    }
-  }
-
-  var lastT = null;
-  function loop(now) {
-    if (lastT === null) lastT = now;
-    var dt = Math.min((now - lastT) / 1000, 0.032);
-    lastT = now;
-    stepSpring(dt);
-  }
-
-  function animateTo(snapName, opts) {
-    opts = opts || {};
-    target = SNAP[snapName];
-    damping = opts.damping != null ? opts.damping : 1.0;
-    response = opts.response != null ? opts.response : 0.38;
-    if (opts.velocity != null) state.v = opts.velocity;
-    lastT = null;
-    if (rafId) cancelAnimationFrame(rafId);
-    if (reducedMotion) {
-      sheet.style.transition = 'transform 200ms ease';
-      state.x = target;
-      state.v = 0;
-      applyTransform(target);
-    } else {
-      sheet.style.transition = 'none';
-      rafId = requestAnimationFrame(loop);
-    }
-  }
-
-  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-
-  function rubberband(overshoot, dimension, constant) {
-    constant = constant || 0.55;
-    return (overshoot * dimension * constant) / (dimension + constant * Math.abs(overshoot));
-  }
-
-  function project(velocity, decelerationRate) {
-    decelerationRate = decelerationRate || 0.998;
-    return (velocity / 1000) * decelerationRate / (1 - decelerationRate);
-  }
-
-  function nearestSnap(y) {
-    var best = 'peek', bestDist = Infinity;
-    order.forEach(function (k) {
-      var d = Math.abs(SNAP[k] - y);
-      if (d < bestDist) { bestDist = d; best = k; }
-    });
-    return best;
-  }
-
-  // ---- drag handling (Pointer Events, 1:1, rubber-banded bounds) ----
-  var dragging = false;
-  var startY = 0;
-  var startTranslate = 0;
-  var history = [];
-
-  function onPointerDown(e) {
-    if (rafId) cancelAnimationFrame(rafId);
-    dragging = true;
-    handleZone.classList.add('is-active');
-    handleZone.setPointerCapture(e.pointerId);
-    startY = e.clientY;
-    startTranslate = state.x;
-    history = [{ y: e.clientY, t: e.timeStamp }];
-    sheet.style.transition = 'none';
-  }
-
-  function onPointerMove(e) {
-    if (!dragging) return;
-    var delta = e.clientY - startY;
-    var raw = startTranslate + delta;
-
-    if (raw < SNAP.full) {
-      raw = SNAP.full - rubberband(SNAP.full - raw, H * 0.6);
-    } else if (raw > SNAP.hidden - 40) {
-      var over = raw - (SNAP.hidden - 40);
-      raw = (SNAP.hidden - 40) + rubberband(over, H * 0.6);
-    }
-
-    state.x = raw;
-    applyTransform(raw);
-
-    history.push({ y: e.clientY, t: e.timeStamp });
-    if (history.length > 6) history.shift();
-  }
-
-  function onPointerUp(e) {
-    if (!dragging) return;
-    dragging = false;
-    handleZone.classList.remove('is-active');
-
-    var velocity = 0;
-    if (history.length >= 2) {
-      var a = history[0], b = history[history.length - 1];
-      var dt = (b.t - a.t) || 16;
-      velocity = (b.y - a.y) / dt * 1000;
-    }
-
-    var wasTap = Math.abs(state.x - startTranslate) < 6 && Math.abs(velocity) < 80;
-    if (wasTap) {
-      var current = nearestSnap(state.x);
-      var next = current === 'peek' ? 'half' : (current === 'half' ? 'full' : 'peek');
-      animateTo(next, { damping: 1.0, response: 0.4 });
-      return;
-    }
-
-    var projected = state.x + project(velocity);
-    var snapName = nearestSnap(projected);
-    var isFlick = Math.abs(velocity) > 300;
-    animateTo(snapName, {
-      velocity: velocity,
-      damping: isFlick ? 0.8 : 1.0,
-      response: 0.4
-    });
-  }
-
-  handleZone.addEventListener('pointerdown', onPointerDown);
-  handleZone.addEventListener('pointermove', onPointerMove);
-  handleZone.addEventListener('pointerup', onPointerUp);
-  handleZone.addEventListener('pointercancel', onPointerUp);
-
-  scrim.addEventListener('pointerdown', function () { animateTo('peek', { damping: 1.0, response: 0.4 }); });
-
-  // initial paint at peek
-  applyTransform(state.x);
-
-  window.addEventListener('resize', function () {
-    H = device.clientHeight;
-    SNAP.full = Math.round(H * 0.08);
-    SNAP.half = Math.round(H * 0.46);
-    SNAP.peek = Math.round(H * 0.76);
-    SNAP.hidden = H + 40;
+  document.querySelectorAll('[data-champ]').forEach(function (el) {
+    var src = ASSETS.champ[el.dataset.champ];
+    if (src) el.style.backgroundImage = 'url(' + src + ')';
   });
 
-  // ---- press feedback: pointerdown, not click ----
+  // ---- press feedback: pointerdown, not click (apple-design §1) ----
   function wirePress(el, onCommit) {
-    el.addEventListener('pointerdown', function () {
-      el.classList.add('is-pressed');
-    });
-    function release() {
-      el.classList.remove('is-pressed');
-    }
+    el.addEventListener('pointerdown', function () { el.classList.add('is-pressed'); });
+    function release() { el.classList.remove('is-pressed'); }
     el.addEventListener('pointerup', function () {
       release();
       if (onCommit) onCommit();
@@ -1380,30 +1161,53 @@ var ASSETS = { champ: {"Azir":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIA
     el.addEventListener('pointerleave', release);
   }
 
-  document.querySelectorAll('.list-row').forEach(function (row) {
-    wirePress(row, function () {
-      document.getElementById('sheetAvatar').textContent = row.dataset.initial;
-      document.getElementById('sheetName').textContent = row.dataset.name;
-      document.getElementById('sheetRegion').textContent = row.dataset.region;
-      document.getElementById('sheetRank').textContent = row.dataset.rank;
-      animateTo('half', { damping: 1.0, response: 0.4 });
-    });
-  });
-
   wirePress(refreshBtn, function () {
     refreshBtn.classList.add('is-spinning');
     setTimeout(function () { refreshBtn.classList.remove('is-spinning'); }, 520);
   });
 
-  document.querySelectorAll('.role-card, .champ-card').forEach(function (card) {
+  document.querySelectorAll('.role-card, .champ-card, .champ-mini, .match-card').forEach(function (card) {
     wirePress(card);
   });
 
-  // ---- top-level app state (busca / carregando / offline / não encontrado / campeões) ----
-  var stateButtons = document.querySelectorAll('#switcher button');
+  // ---- topbar: materializes on scroll in search mode, always solid in detail mode ----
+  var stateSearchScroll = document.getElementById('stateSearch');
+  stateSearchScroll.addEventListener('scroll', function () {
+    if (topbar.dataset.mode === 'search') {
+      topbar.classList.toggle('is-materialized', stateSearchScroll.scrollTop > 4);
+    }
+  });
+
+  wirePress(document.getElementById('topbarBack'), function () { goto('search'); });
+  wirePress(document.getElementById('topbarOverflow'));
+
+  // ---- top-level navigation: busca / perfil / campeões / estados de erro ----
+  var switcherButtons = document.querySelectorAll('#switcher button');
   var navTabButtons = document.querySelectorAll('.nav-tab');
   var statePanels = document.querySelectorAll('.app-state');
   var currentState = 'search';
+
+  var DETAIL_MODE_STATES = { profile: 1, 'profile-loading': 1, notfound: 1 };
+
+  function setTopbarMode(name) {
+    topbar.dataset.mode = DETAIL_MODE_STATES[name] ? 'detail' : 'search';
+    if (topbar.dataset.mode === 'detail') {
+      topbar.classList.add('is-materialized');
+    } else {
+      topbar.classList.toggle('is-materialized', stateSearchScroll.scrollTop > 4);
+    }
+  }
+
+  function setNavTab(name) {
+    var navName = (name === 'profile' || name === 'profile-loading') ? 'profile'
+      : (name === 'champions') ? 'champions'
+      : (name === 'search' || name === 'loading') ? 'search'
+      : null; // offline/notfound keep whatever nav tab was already active
+    if (!navName) return;
+    navTabButtons.forEach(function (b) {
+      b.classList.toggle('is-current', b.dataset.goto === navName);
+    });
+  }
 
   function goto(name) {
     if (name === currentState) return;
@@ -1411,22 +1215,14 @@ var ASSETS = { champ: {"Azir":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIA
     statePanels.forEach(function (p) {
       p.classList.toggle('is-current', p.dataset.state === name);
     });
-    stateButtons.forEach(function (b) {
+    switcherButtons.forEach(function (b) {
       b.classList.toggle('is-active', b.dataset.goto === name);
     });
-    navTabButtons.forEach(function (b) {
-      var isSearchFamily = name !== 'champions';
-      var active = b.dataset.goto === 'champions' ? name === 'champions' : isSearchFamily;
-      b.classList.toggle('is-current', active);
-    });
-    if (name === 'search') {
-      animateTo('peek', { damping: 1.0, response: 0.4 });
-    } else {
-      animateTo('hidden', { damping: 1.0, response: 0.4 });
-    }
+    setTopbarMode(name);
+    setNavTab(name);
   }
 
-  stateButtons.forEach(function (b) {
+  switcherButtons.forEach(function (b) {
     wirePress(b, function () { goto(b.dataset.goto); });
   });
 
@@ -1434,17 +1230,27 @@ var ASSETS = { champ: {"Azir":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIA
     wirePress(b, function () { goto(b.dataset.goto); });
   });
 
-  var retryBtn = document.getElementById('retryBtn');
-  wirePress(retryBtn, function () {
+  wirePress(document.getElementById('retryBtn'), function () {
     goto('loading');
     setTimeout(function () { goto('search'); }, 900);
   });
 
-  // ---- fotos reais de campeão/item (Data Dragon), embutidas como data URI ----
-  document.querySelectorAll('[data-champ]').forEach(function (el) {
-    var src = ASSETS.champ[el.dataset.champ];
-    if (src) el.style.backgroundImage = 'url(' + src + ')';
+  wirePress(document.getElementById('backToSearchBtn'), function () { goto('search'); });
+
+  document.querySelectorAll('.list-row').forEach(function (row) {
+    wirePress(row, function () {
+      document.getElementById('topbarName').textContent = row.dataset.name;
+      document.getElementById('topbarRegion').textContent = row.dataset.region;
+      document.getElementById('profileName').textContent = row.dataset.name.split('#')[0];
+      document.getElementById('profileTag').textContent = '#' + row.dataset.name.split('#')[1] + ' · ' + row.dataset.region;
+      goto('profile-loading');
+      setNavTab('profile');
+      setTimeout(function () { goto('profile'); }, 700);
+    });
   });
+
+  var favoriteBtn = document.getElementById('favoriteBtn');
+  wirePress(favoriteBtn, function () { favoriteBtn.classList.toggle('is-active'); });
 
   // ---- tela de campeões: grid + busca + build recomendada ----
   var CHAMPIONS = [
@@ -1466,7 +1272,6 @@ var ASSETS = { champ: {"Azir":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIA
     { id: 'Syndra', name: 'Syndra', role: 'Mago' }
   ];
 
-  // build de exemplo (mago de corredor central) — mockup, não reflete meta real
   var SAMPLE_BUILD = ['3020', '3157', '6653', '3165', '3135', '3089'];
   var ITEM_NAMES = {
     '3020': "Botas do Feiticeiro",
@@ -1515,8 +1320,6 @@ var ASSETS = { champ: {"Azir":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIA
 
     buildPanel.classList.remove('is-visible');
 
-    // materializa: sai, espera um frame, entra com o conteúdo novo — nunca
-    // troca o conteúdo com o painel ainda visível (isso pareceria um corte seco)
     requestAnimationFrame(function () {
       buildPanel.innerHTML =
         '<div class="build-header">' +
@@ -1537,16 +1340,12 @@ var ASSETS = { champ: {"Azir":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIA
 
       document.querySelectorAll('.build-item').forEach(function (btn) { wirePress(btn); });
 
-      requestAnimationFrame(function () {
-        buildPanel.classList.add('is-visible');
-      });
+      requestAnimationFrame(function () { buildPanel.classList.add('is-visible'); });
     });
   }
 
   if (champSearchInput) {
-    champSearchInput.addEventListener('input', function () {
-      renderChampGrid(champSearchInput.value);
-    });
+    champSearchInput.addEventListener('input', function () { renderChampGrid(champSearchInput.value); });
   }
 
   renderChampGrid('');
