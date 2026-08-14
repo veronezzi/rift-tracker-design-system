@@ -456,8 +456,80 @@
   .match-meta { flex: 1; min-width: 0; }
   .match-champ { font-size: 0.76rem; font-weight: 600; }
   .match-detail { font-size: 0.63rem; color: var(--app-muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
-  .match-kda { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
+  .match-side { text-align: right; flex: none; }
+  .match-kda { font-size: 0.72rem; font-weight: 700; font-variant-numeric: tabular-nums; }
   .match-kda .neutral { color: var(--app-muted); font-weight: 500; }
+  .match-cs { font-size: 0.6rem; color: var(--app-muted); font-variant-numeric: tabular-nums; margin-top: 2px; }
+
+  /* rank/LP summary line under the sheet name */
+  .rank-summary {
+    font-size: 0.68rem;
+    color: var(--app-muted);
+    font-variant-numeric: tabular-nums;
+    margin-top: 3px;
+  }
+  .rank-summary strong {
+    color: var(--app-fg);
+    font-weight: 700;
+  }
+
+  /* horizontally-scrolling cards: roles, top champions — native momentum
+     scroll, nothing hand-rolled, per apple-design "reach for native physics
+     before reimplementing it" */
+  .hscroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .hscroll::-webkit-scrollbar { display: none; }
+
+  .role-card, .champ-card {
+    scroll-snap-align: start;
+    flex: none;
+    background: var(--app-surface);
+    border: 1px solid var(--app-hairline);
+    border-radius: 12px;
+    padding: 10px 12px;
+    min-width: 92px;
+    transform: scale(1);
+    transition: transform 90ms ease-out, background-color 90ms ease-out;
+  }
+  .role-card.is-pressed, .champ-card.is-pressed { transform: scale(0.96); background: var(--app-surface-2); }
+
+  .role-name, .champ-name {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+  }
+  .role-wr, .champ-wr {
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    font-variant-numeric: tabular-nums;
+    margin-top: 4px;
+  }
+  .role-wr.is-high, .champ-wr.is-high { color: var(--win); }
+  .role-record, .champ-record {
+    font-size: 0.58rem;
+    color: var(--app-muted);
+    font-variant-numeric: tabular-nums;
+    margin-top: 1px;
+  }
+  .role-kda, .champ-kda {
+    font-size: 0.6rem;
+    color: var(--app-muted);
+    font-variant-numeric: tabular-nums;
+    margin-top: 5px;
+    padding-top: 5px;
+    border-top: 1px solid var(--app-hairline);
+  }
 
   .tabbar {
     position: absolute;
@@ -801,6 +873,7 @@
             <div>
               <div class="sheet-name" id="sheetName">Faker#KR1</div>
               <div class="sheet-sub"><span id="sheetRegion">KR</span> · <span id="sheetRank">Diamante</span></div>
+              <div class="rank-summary"><strong>78 LP</strong> · 62% WR · 92 partidas</div>
             </div>
             <div class="sheet-hint">Arraste pra ver mais ↑</div>
           </div>
@@ -811,37 +884,81 @@
               <div class="stat-card"><div class="stat-value">213</div><div class="stat-label">Partidas</div></div>
             </div>
 
-            <div class="section-label" style="margin-top:2px;">Últimas partidas</div>
+            <div class="section-label">Rotas</div>
+            <div class="hscroll">
+              <div class="role-card">
+                <div class="role-name">Meio</div>
+                <div class="role-wr is-high">57%</div>
+                <div class="role-record">39V 29D</div>
+                <div class="role-kda">KDA 2.5</div>
+              </div>
+              <div class="role-card">
+                <div class="role-name">Selva</div>
+                <div class="role-wr is-high">71%</div>
+                <div class="role-record">5V 2D</div>
+                <div class="role-kda">KDA 4.2</div>
+              </div>
+              <div class="role-card">
+                <div class="role-name">Atirador</div>
+                <div class="role-wr is-high">57%</div>
+                <div class="role-record">4V 3D</div>
+                <div class="role-kda">KDA 2.4</div>
+              </div>
+            </div>
+
+            <div class="section-label">Campeões mais jogados</div>
+            <div class="hscroll">
+              <div class="champ-card">
+                <div class="champ-name">Cassiopeia</div>
+                <div class="champ-wr is-high">57%</div>
+                <div class="champ-record">12V 9D</div>
+                <div class="champ-kda">KDA 2.4</div>
+              </div>
+              <div class="champ-card">
+                <div class="champ-name">Viktor</div>
+                <div class="champ-wr is-high">67%</div>
+                <div class="champ-record">8V 4D</div>
+                <div class="champ-kda">KDA 3.3</div>
+              </div>
+              <div class="champ-card">
+                <div class="champ-name">Ryze</div>
+                <div class="champ-wr is-high">56%</div>
+                <div class="champ-record">5V 4D</div>
+                <div class="champ-kda">KDA 2.3</div>
+              </div>
+            </div>
+
+            <div class="section-label">Últimas partidas</div>
 
             <div class="match-row">
               <div class="match-result win"></div>
               <div class="champ-badge">AZ</div>
               <div class="match-meta"><div class="match-champ">Azir</div><div class="match-detail">Vitória · 28min</div></div>
-              <div class="match-kda">9/2/6</div>
+              <div class="match-side"><div class="match-kda">9/2/6</div><div class="match-cs">8.9 CS/min</div></div>
             </div>
             <div class="match-row">
               <div class="match-result win"></div>
               <div class="champ-badge">OR</div>
               <div class="match-meta"><div class="match-champ">Orianna</div><div class="match-detail">Vitória · 31min</div></div>
-              <div class="match-kda">4/1/11</div>
+              <div class="match-side"><div class="match-kda">4/1/11</div><div class="match-cs">7.3 CS/min</div></div>
             </div>
             <div class="match-row">
               <div class="match-result loss"></div>
               <div class="champ-badge">AH</div>
               <div class="match-meta"><div class="match-champ">Ahri</div><div class="match-detail">Derrota · 34min</div></div>
-              <div class="match-kda">6/5/4</div>
+              <div class="match-side"><div class="match-kda">6/5/4</div><div class="match-cs">6.1 CS/min</div></div>
             </div>
             <div class="match-row">
               <div class="match-result win"></div>
               <div class="champ-badge">ZO</div>
               <div class="match-meta"><div class="match-champ">Zoe</div><div class="match-detail">Vitória · 24min</div></div>
-              <div class="match-kda">11/1/7</div>
+              <div class="match-side"><div class="match-kda">11/1/7</div><div class="match-cs">9.8 CS/min</div></div>
             </div>
             <div class="match-row">
               <div class="match-result win"></div>
               <div class="champ-badge">TF</div>
               <div class="match-meta"><div class="match-champ">Twisted Fate</div><div class="match-detail">Vitória · 29min</div></div>
-              <div class="match-kda">7/3/9</div>
+              <div class="match-side"><div class="match-kda">7/3/9</div><div class="match-cs">8.6 CS/min</div></div>
             </div>
           </div>
         </div>
@@ -1110,6 +1227,10 @@
   wirePress(refreshBtn, function () {
     refreshBtn.classList.add('is-spinning');
     setTimeout(function () { refreshBtn.classList.remove('is-spinning'); }, 520);
+  });
+
+  document.querySelectorAll('.role-card, .champ-card').forEach(function (card) {
+    wirePress(card);
   });
 
   // ---- top-level app state (busca / carregando / offline / não encontrado) ----
