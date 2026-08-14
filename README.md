@@ -8,9 +8,13 @@ A origem é um mockup web (skill `apple-design`, ver `prototypes/`) — este doc
 
 *Screenshot real do app rodando (`DesignSystemPreviewActivity`, ver seção "Vitrine" abaixo) — não é mockup.*
 
-## Vitrine (`DesignSystemPreviewActivity`)
+## Vitrine web (`test-app/`)
 
-Todo componente descrito aqui está montado numa tela só, no repo do app, que só existe em build debug (`app/src/debug/`) — não faz parte do app de produção nem do `nav_graph`. É o jeito de conferir visualmente um token ou um widget sem precisar montar uma tela de feature de verdade.
+`test-app/index.html` é uma vitrine interativa que roda em qualquer navegador (sem Android Studio, sem emulador) — abra o arquivo direto. Cada componente é clicável: abre um painel com a versão de verdade pra você interagir (botão reage ao toque, chip seleciona, input aceita texto, bottom sheet arrasta) e o XML exato de uso, com botão de copiar.
+
+## Vitrine Android (`DesignSystemPreviewActivity`)
+
+Todo componente descrito aqui também está montado numa tela só, no repo do app, que só existe em build debug (`app/src/debug/`) — não faz parte do app de produção nem do `nav_graph`. É o jeito de conferir visualmente um token ou um widget rodando de verdade no Android, não só a aproximação web.
 
 ```bash
 # a partir do clone de rift-tracker
