@@ -150,4 +150,57 @@
         <item name="behavior_fitToContents">false</item>
         <item name="behavior_halfExpandedRatio">0.55</item>
     </style>
+
+    <!-- Slot de item no card de histórico de partida (até 6 por linha).
+         Reaproveita @drawable/bg_ability_badge — mesma superfície neutra
+         quadrada de canto arredondado, só menor e sem letra por cima.
+         Ver view_match_history_item.xml. -->
+    <style name="Widget.RiftTracker.ItemSlot" parent="android:Widget">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:background">@drawable/bg_ability_badge</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
+    <!-- Badge de nível de maestria de campeão (M1-M7) — mesma convenção do
+         TierBadge: reaproveita @drawable/bg_tier_badge (círculo) e a cor
+         vem por instância via android:backgroundTint. Um pouco maior que
+         o TierBadge porque "M7" tem dois caracteres. -->
+    <style name="Widget.RiftTracker.MasteryBadge" parent="android:Widget">
+        <item name="android:layout_width">28dp</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:background">@drawable/bg_tier_badge</item>
+        <item name="android:backgroundTint">@color/rift_accent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/rift_on_accent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- Avatar circular (ícone de invocador/perfil) — ShapeableImageView do
+         Material Components faz o clip, sem Canvas/Path na mão. Borda com o
+         hairline (não o accent) pra não competir com CTA. Três tamanhos via
+         dimens; ver view.RiftTracker.Avatar.Small/.Medium/.Large abaixo. -->
+    <style name="Widget.RiftTracker.Avatar" parent="android:Widget">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.RiftTracker.Pill</item>
+        <item name="strokeColor">@color/rift_hairline</item>
+        <item name="strokeWidth">@dimen/hairline_width</item>
+    </style>
+
+    <style name="Widget.RiftTracker.Avatar.Small">
+        <item name="android:layout_width">@dimen/avatar_size_sm</item>
+        <item name="android:layout_height">@dimen/avatar_size_sm</item>
+    </style>
+
+    <style name="Widget.RiftTracker.Avatar.Medium">
+        <item name="android:layout_width">@dimen/avatar_size_md</item>
+        <item name="android:layout_height">@dimen/avatar_size_md</item>
+    </style>
+
+    <style name="Widget.RiftTracker.Avatar.Large">
+        <item name="android:layout_width">@dimen/avatar_size_lg</item>
+        <item name="android:layout_height">@dimen/avatar_size_lg</item>
+    </style>
 </resources>

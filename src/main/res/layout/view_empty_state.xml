@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Estado vazio/erro genérico — cobre "invocador não encontrado", "chave de
+  API inválida", "sem internet" etc., trocando só ícone/título/mensagem via
+  ViewBinding. O botão de tentar novamente começa gone (nem todo estado tem
+  ação, ex.: "nenhuma partida ainda" não tem o que tentar de novo).
+  <include> este layout; ver README "Estado vazio/erro".
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="@dimen/spacing_xxl">
+
+    <ImageView
+        android:id="@+id/emptyStateIcon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_status_icon"
+        android:padding="14dp"
+        android:src="@drawable/ic_shield"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/emptyStateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:gravity="center"
+        android:text="Invocador não encontrado"
+        android:textAppearance="@style/TextAppearance.RiftTracker.Title" />
+
+    <TextView
+        android:id="@+id/emptyStateMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:gravity="center"
+        android:text="Confira o Riot ID e a região e tente de novo."
+        android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/emptyStateRetryButton"
+        style="@style/Widget.RiftTracker.Button.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_lg"
+        android:text="Tentar novamente"
+        android:visibility="gone" />
+</LinearLayout>
