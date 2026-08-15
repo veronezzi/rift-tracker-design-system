@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Pulso de opacidade pro placeholder de carregamento (view_skeleton_row.xml).
+  Animation simples (não AnimatedVectorDrawable, não ObjectAnimator escrito
+  na mão) — sobe e desce de opacidade em loop, sem depender de mais nenhuma
+  dependência. Inicie com:
+  view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.skeleton_pulse))
+-->
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromAlpha="1.0"
+    android:toAlpha="0.4"
+    android:duration="700"
+    android:repeatMode="reverse"
+    android:repeatCount="infinite" />

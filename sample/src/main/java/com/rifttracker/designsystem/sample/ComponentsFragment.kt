@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.rifttracker.designsystem.R
 import com.rifttracker.designsystem.sample.databinding.FragmentComponentsBinding
 
 /**
@@ -53,6 +55,25 @@ class ComponentsFragment : Fragment() {
         binding.statCardDifficulty.statValue.text = "4/5"
         binding.statCardDifficulty.statLabel.text = "Dificuldade"
 
+        // dados de exemplo pros novos componentes de tracker (histórico,
+        // maestria, estado vazio) — mesma ideia dos exemplos acima, só pra
+        // vitrine mostrar algo plausível
+        binding.matchHistoryPreview.matchChampionName.text = "Ahri"
+        binding.matchHistoryPreview.matchKda.text = "7/2/5"
+        binding.matchHistoryPreview.matchTimeAgo.text = "há 2h"
+
+        binding.championMasteryPreview.masteryChampionName.text = "Ahri"
+        binding.championMasteryPreview.masteryPoints.text = "245.320 pontos"
+        binding.championMasteryPreview.masteryLevelBadge.text = "M7"
+
+        binding.skeletonPreview.skeletonRoot.startAnimation(
+            AnimationUtils.loadAnimation(requireContext(), R.anim.skeleton_pulse),
+        )
+
+        binding.emptyStatePreview.emptyStateTitle.text = "Invocador não encontrado"
+        binding.emptyStatePreview.emptyStateMessage.text = "Confira o Riot ID e a região e tente de novo."
+        binding.emptyStatePreview.emptyStateRetryButton.visibility = View.VISIBLE
+
         val rows = listOf(
             Triple("Cores", binding.itemColors, binding.headerColors to binding.detailColors),
             Triple("Tipografia", binding.itemTypography, binding.headerTypography to binding.detailTypography),
@@ -71,6 +92,19 @@ class ComponentsFragment : Fragment() {
             Triple("Barra de winrate", binding.itemWinrateBar, binding.headerWinrateBar to binding.detailWinrateBar),
             Triple("Bottom navigation", binding.itemBottomNav, binding.headerBottomNav to binding.detailBottomNav),
             Triple("Bottom sheet", binding.itemBottomSheet, binding.headerBottomSheet to binding.detailBottomSheet),
+            Triple(
+                "Item de histórico de partida",
+                binding.itemMatchHistory,
+                binding.headerMatchHistory to binding.detailMatchHistory,
+            ),
+            Triple(
+                "Card de maestria de campeão",
+                binding.itemChampionMastery,
+                binding.headerChampionMastery to binding.detailChampionMastery,
+            ),
+            Triple("Skeleton de carregamento", binding.itemSkeleton, binding.headerSkeleton to binding.detailSkeleton),
+            Triple("Estado vazio/erro", binding.itemEmptyState, binding.headerEmptyState to binding.detailEmptyState),
+            Triple("Avatar", binding.itemAvatar, binding.headerAvatar to binding.detailAvatar),
         )
 
         rows.forEach { (name, _, headerAndDetail) ->

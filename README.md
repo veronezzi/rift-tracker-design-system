@@ -301,6 +301,58 @@ binding.rankCardPreview.rankWinSegment.layoutParams =
 
 **Bottom navigation** — `BottomNavigationView` com `style="@style/Widget.RiftTracker.BottomNavigationView"` e seu próprio `app:menu` (os itens de navegação são da feature, não do design system). Use `android:layout_height="@dimen/bottom_nav_height"` (altura fixa) em vez de `wrap_content` — dentro de um `NestedScrollView` o `wrap_content` mede com `UNSPECIFIED` e a view colapsa para 0dp.
 
+## Cobertura: histórico de partidas, maestria, loading e estado vazio
+
+Componentes pensados pro app tracker de jogador (lista de partidas, ficha de maestria de campeão, e os estados que toda tela que chama a Riot API precisa cobrir: carregando, vazio, erro). Mesma convenção das seções acima: `<include>` o layout composto e alimente os `id`s via ViewBinding. Todos com exemplo na vitrine (`DesignSystemPreviewActivity` / módulo `:sample`).
+
+**Item de histórico de partida** — `<include layout="@layout/view_match_history_item" />`. Card com faixa de resultado (`matchResultStrip`), ícone do campeão, nome, KDA, até 6 ícones de item (`matchItem1`..`matchItem6`, `Widget.RiftTracker.ItemSlot`) e tempo relativo. A cor de vitória/derrota é dado da partida, então troque o `style` do card e a cor da faixa junto:
+
+```kotlin
+val venceu = match.win
+binding.matchHistoryPreview.matchHistoryCard.setStrokeColor(
+    ContextCompat.getColorStateList(
+        requireContext(),
+        if (venceu) R.color.rift_win else R.color.rift_loss,
+    ),
+)
+binding.matchHistoryPreview.matchResultStrip.setBackgroundColor(
+    ContextCompat.getColor(requireContext(), if (venceu) R.color.rift_win else R.color.rift_loss),
+)
+binding.matchHistoryPreview.matchChampionName.text = "Ahri"
+binding.matchHistoryPreview.matchKda.text = "7/2/5"
+Glide.with(this).load(itemIconUrl).into(binding.matchHistoryPreview.matchItem1)
+```
+
+**Card de maestria de campeão** — `<include layout="@layout/view_champion_mastery_card" />`. Ícone, nome, pontos (`masteryPoints`) e badge de nível (`masteryLevelBadge`, `Widget.RiftTracker.MasteryBadge` — mesma ideia do `TierBadge`, `android:backgroundTint` por instância).
+
+**Skeleton de carregamento** — `<include layout="@layout/view_skeleton_row" />` no lugar da linha de verdade enquanto a resposta da Riot API não chega. Os blocos reaproveitam `bg_tier_badge`/`bg_ability_badge` (círculo e retângulo já existentes, só com `backgroundTint` cinza), sem drawable novo. O pulso de opacidade é uma `Animation` XML simples (`res/anim/skeleton_pulse.xml`), sem `AnimatedVectorDrawable` nem `ObjectAnimator` escrito na mão:
+
+```kotlin
+binding.skeletonPreview.skeletonRoot.startAnimation(
+    AnimationUtils.loadAnimation(requireContext(), R.anim.skeleton_pulse),
+)
+```
+
+**Estado vazio/erro** — `<include layout="@layout/view_empty_state" />`. Ícone (`emptyStateIcon`, mesmo `bg_status_icon` já documentado pra isso), título (`emptyStateTitle`, `TextAppearance.RiftTracker.Title`), mensagem (`emptyStateMessage`, `.Body`) e um botão de tentar novamente (`emptyStateRetryButton`, `Widget.RiftTracker.Button.Primary`) que começa `gone` — nem todo estado tem ação (ex.: "nenhuma partida ainda" não tem o que tentar de novo). Cobre "invocador não encontrado", "chave de API inválida", "sem internet" etc., só trocando ícone/texto:
+
+```kotlin
+binding.emptyStatePreview.emptyStateTitle.text = "Sem conexão"
+binding.emptyStatePreview.emptyStateMessage.text = "Verifique sua internet e tente de novo."
+binding.emptyStatePreview.emptyStateRetryButton.visibility = View.VISIBLE
+binding.emptyStatePreview.emptyStateRetryButton.setOnClickListener { recarregar() }
+```
+
+**Avatar** — `Widget.RiftTracker.Avatar.Small`/`.Medium`/`.Large` num `ShapeableImageView` (clip circular do Material Components, sem `Canvas`/`Path` na mão), com borda no `rift_hairline` pra não competir com o accent:
+
+```xml
+<com.google.android.material.imageview.ShapeableImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="@style/Widget.RiftTracker.Avatar.Medium"
+    android:src="@drawable/profile_icon"
+    android:contentDescription="@null" />
+```
+
 ## O que não tem equivalente direto
 
 O mockup usa `backdrop-filter: blur()` (vidro translúcido) no sheet e na barra superior. Isso não tem equivalente direto e barato em Views pré-API 31 (blur real de verdade exige `RenderEffect`, API 31+, e não é algo pra sustentar num app de estudo). A tradução deliberada foi: cor de superfície sólida (`rift_surface`) + elevação de camada, que é o jeito idiomático Android de comunicar hierarquia de material — não é uma versão "incompleta" do mockup, é a tradução certa pra essa plataforma.

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Card de maestria de campeão — ícone, nome, pontos e badge de nível
+  (M1-M7). <include> este layout e alimente os ids via ViewBinding; ver
+  README "Card de maestria de campeão".
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.RiftTracker.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="@dimen/spacing_md">
+
+        <ImageView
+            android:id="@+id/masteryChampionIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_shield"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/masteryChampionName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ahri"
+                android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+            <TextView
+                android:id="@+id/masteryPoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:text="245.320 pontos"
+                android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/masteryLevelBadge"
+            style="@style/Widget.RiftTracker.MasteryBadge"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:text="M7" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

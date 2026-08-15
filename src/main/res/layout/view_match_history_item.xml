@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Item de histórico de partidas — card de linha com faixa de resultado,
+  ícone do campeão, KDA, até 6 itens e o tempo relativo. <include> este
+  layout e alimente os ids via ViewBinding; ver README "Item de histórico
+  de partida". O estilo do card (borda verde/vermelha) e a cor da faixa são
+  a mesma decisão de resultado — troque style="@style/Widget.RiftTracker.CardView.Win"
+  por ".Loss" neste MaterialCardView e a cor de matchResultStrip junto
+  (rift_win/rift_loss); não tem como fixar isso no design system porque o
+  resultado é dado da partida.
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/matchHistoryCard"
+    style="@style/Widget.RiftTracker.CardView.Win"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <View
+            android:id="@+id/matchResultStrip"
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@color/rift_win" />
+
+        <ImageView
+            android:id="@+id/matchChampionIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/spacing_md"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_shield"
+            app:tint="@color/rift_on_surface_muted"
+            android:contentDescription="@null" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/matchChampionName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ahri"
+                android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+            <TextView
+                android:id="@+id/matchKda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:text="7/2/5"
+                android:textAppearance="@style/TextAppearance.RiftTracker.StatValue" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/matchItemsRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/matchItem1"
+                style="@style/Widget.RiftTracker.ItemSlot"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:id="@+id/matchItem2"
+                style="@style/Widget.RiftTracker.ItemSlot"
+                android:layout_marginStart="@dimen/spacing_xxs"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:id="@+id/matchItem3"
+                style="@style/Widget.RiftTracker.ItemSlot"
+                android:layout_marginStart="@dimen/spacing_xxs"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:id="@+id/matchItem4"
+                style="@style/Widget.RiftTracker.ItemSlot"
+                android:layout_marginStart="@dimen/spacing_xxs"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:id="@+id/matchItem5"
+                style="@style/Widget.RiftTracker.ItemSlot"
+                android:layout_marginStart="@dimen/spacing_xxs"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:id="@+id/matchItem6"
+                style="@style/Widget.RiftTracker.ItemSlot"
+                android:layout_marginStart="@dimen/spacing_xxs"
+                android:contentDescription="@null" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/matchTimeAgo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_sm"
+            android:layout_marginEnd="@dimen/spacing_md"
+            android:text="há 2h"
+            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
