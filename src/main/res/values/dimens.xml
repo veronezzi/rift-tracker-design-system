@@ -35,4 +35,10 @@
          visualmente idênticos (o conteúdo inteiro já cabia no peek antigo
          de 150dp). Ver Widget.RiftTracker.BottomSheet em styles.xml. -->
     <dimen name="bottom_sheet_peek_height">48dp</dimen>
+
+    <!-- Altura da BottomNavigationView. Fixa em vez de wrap_content porque
+         dentro de um NestedScrollView (como na vitrine) o wrap_content mede
+         com UNSPECIFIED e a view colapsa para 0dp de altura — bug conhecido
+         do componente Material dentro de containers de scroll. -->
+    <dimen name="bottom_nav_height">80dp</dimen>
 </resources>

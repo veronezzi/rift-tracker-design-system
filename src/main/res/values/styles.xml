@@ -73,6 +73,71 @@
         <item name="checkedIconVisible">false</item>
     </style>
 
+    <!-- Card de partida: mesmo Widget.RiftTracker.CardView, só troca a cor
+         da borda pra sinalizar o resultado — o resto (elevação 0, raio de
+         canto) continua igual. -->
+    <style name="Widget.RiftTracker.CardView.Win">
+        <item name="strokeColor">@color/rift_win</item>
+        <item name="strokeWidth">@dimen/stroke_width</item>
+    </style>
+
+    <style name="Widget.RiftTracker.CardView.Loss">
+        <item name="strokeColor">@color/rift_loss</item>
+        <item name="strokeWidth">@dimen/stroke_width</item>
+    </style>
+
+    <!-- Badge de tier de campeão (S/A/B/C) — círculo pequeno, cor setada
+         por instância via android:backgroundTint (@color/champ_tier_*),
+         mesma ideia do chip de rank: forma é do design system, cor por
+         tier é decisão de quem monta a tela. -->
+    <style name="Widget.RiftTracker.TierBadge" parent="android:Widget">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:background">@drawable/bg_tier_badge</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/rift_on_accent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- Badge de habilidade (P/Q/W/E/R) — quadrado com canto arredondado. -->
+    <style name="Widget.RiftTracker.AbilityBadge" parent="android:Widget">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:background">@drawable/bg_ability_badge</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/rift_on_surface</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- Container da barra de winrate. O % de vitória/derrota é dado da
+         feature, não do design system — o segmento de vitória é uma View
+         filha com layout_weight setado por quem monta a tela (ver README:
+         "Barra de winrate" tem o exemplo completo com os dois segmentos). -->
+    <style name="Widget.RiftTracker.WinrateBar" parent="android:Widget">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">6dp</item>
+        <item name="android:background">@drawable/bg_progress_track</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- Bottom navigation: fundo de superfície, ícone/texto no accent quando
+         selecionado, indicador de seleção desligado (mantém o visual "chapado"
+         do resto do design system, sem pílula/glow atrás do ícone). -->
+    <style name="Widget.RiftTracker.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/rift_surface</item>
+        <item name="itemIconTint">@color/bottom_nav_item</item>
+        <item name="itemTextColor">@color/bottom_nav_item</item>
+        <item name="itemRippleColor">@color/rift_hairline</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.RiftTracker.BottomNavigationView.NoIndicator</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Widget.RiftTracker.BottomNavigationView.NoIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@android:color/transparent</item>
+    </style>
+
     <!-- Bottom sheet arrastável (perfil/detalhe). Usa BottomSheetBehavior
          nativo do Material Components — ele já entrega fling-to-nearest-state
          com velocidade do gesto, que é exatamente o que a skill apple-design

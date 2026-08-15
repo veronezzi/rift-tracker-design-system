@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Menu só pra demonstrar Widget.RiftTracker.BottomNavigationView na
+  vitrine — os itens de verdade (Buscar/Perfil/Campeões) são definidos
+  pelo app consumidor, não fazem parte do design system.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/demoNavOne"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Buscar" />
+    <item
+        android:id="@+id/demoNavTwo"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Perfil" />
+    <item
+        android:id="@+id/demoNavThree"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="Campeões" />
+</menu>

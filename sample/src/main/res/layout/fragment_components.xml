@@ -720,6 +720,433 @@
                         android:background="@color/rift_hairline" />
                 </LinearLayout>
 
+                <!-- Card de rank -->
+                <LinearLayout
+                    android:id="@+id/itemRankCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/headerRankCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target_min"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Card de rank"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="›"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/detailRankCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:paddingBottom="@dimen/spacing_lg">
+
+                        <include
+                            android:id="@+id/rankCardPreview"
+                            layout="@layout/view_rank_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hairline_width"
+                        android:background="@color/rift_hairline" />
+                </LinearLayout>
+
+                <!-- Card de partida -->
+                <LinearLayout
+                    android:id="@+id/itemMatchCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/headerMatchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target_min"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Card de partida"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="›"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/detailMatchCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:paddingBottom="@dimen/spacing_lg">
+
+                        <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.RiftTracker.CardView.Win"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/spacing_md"
+                                android:text="Vitória — Widget.RiftTracker.CardView.Win"
+                                android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            style="@style/Widget.RiftTracker.CardView.Loss"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/spacing_md"
+                                android:text="Derrota — Widget.RiftTracker.CardView.Loss"
+                                android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hairline_width"
+                        android:background="@color/rift_hairline" />
+                </LinearLayout>
+
+                <!-- Componentes de campeão: tier, stat card, habilidade -->
+                <LinearLayout
+                    android:id="@+id/itemChampionParts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/headerChampionParts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target_min"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Componentes de campeão"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="›"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/detailChampionParts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:paddingBottom="@dimen/spacing_lg">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:text="Tier (S/A/B/C)"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.TierBadge"
+                                android:backgroundTint="@color/champ_tier_s"
+                                android:text="S" />
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.TierBadge"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:backgroundTint="@color/champ_tier_a"
+                                android:text="A" />
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.TierBadge"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:backgroundTint="@color/champ_tier_b"
+                                android:text="B" />
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.TierBadge"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:backgroundTint="@color/champ_tier_c"
+                                android:text="C" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_lg"
+                            android:text="Stat card"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:orientation="horizontal">
+
+                            <include
+                                android:id="@+id/statCardWin"
+                                layout="@layout/view_stat_card"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1" />
+
+                            <include
+                                android:id="@+id/statCardDifficulty"
+                                layout="@layout/view_stat_card"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_marginStart="@dimen/spacing_sm" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_lg"
+                            android:text="Habilidade (P/Q/W/E/R)"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.AbilityBadge"
+                                android:backgroundTint="@color/rift_accent"
+                                android:textColor="@color/rift_on_accent"
+                                android:text="P" />
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.AbilityBadge"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:text="Q" />
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.AbilityBadge"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:text="W" />
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.AbilityBadge"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:text="E" />
+
+                            <TextView
+                                style="@style/Widget.RiftTracker.AbilityBadge"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:text="R" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hairline_width"
+                        android:background="@color/rift_hairline" />
+                </LinearLayout>
+
+                <!-- Barra de winrate -->
+                <LinearLayout
+                    android:id="@+id/itemWinrateBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/headerWinrateBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target_min"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Barra de winrate"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="›"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/detailWinrateBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:paddingBottom="@dimen/spacing_lg">
+
+                        <LinearLayout
+                            style="@style/Widget.RiftTracker.WinrateBar"
+                            android:layout_marginTop="@dimen/spacing_sm">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="55"
+                                android:background="@color/rift_win" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="45"
+                                android:background="@android:color/transparent" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:text="55% de vitórias"
+                            android:textColor="@color/rift_win"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hairline_width"
+                        android:background="@color/rift_hairline" />
+                </LinearLayout>
+
+                <!-- Bottom navigation -->
+                <LinearLayout
+                    android:id="@+id/itemBottomNav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/headerBottomNav"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/touch_target_min"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/spacing_lg"
+                        android:paddingEnd="@dimen/spacing_lg"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Bottom navigation"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="›"
+                            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/detailBottomNav"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.google.android.material.bottomnavigation.BottomNavigationView
+                            android:id="@+id/bottomNavPreview"
+                            style="@style/Widget.RiftTracker.BottomNavigationView"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/bottom_nav_height"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            app:menu="@menu/demo_bottom_nav_menu" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/hairline_width"
+                        android:background="@color/rift_hairline" />
+                </LinearLayout>
+
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Card de rank — ícone de fila, chip de tier, PDL, recorde V/D, barra de
+  winrate, e uma segunda fila compacta pra uma fila secundária (ex.:
+  Flexível 5v5). <include> este layout e alimente os ids via ViewBinding;
+  ver README "Card de rank" pro exemplo completo, incluindo como setar o
+  peso da barra de winrate (não dá pra fixar no design system, é dado
+  da feature).
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.RiftTracker.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_lg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/rankIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_status_icon"
+                android:padding="6dp"
+                android:src="@drawable/ic_shield"
+                app:tint="@color/rift_on_surface_muted"
+                android:contentDescription="@null" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rankQueue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ranqueada Solo/Duo"
+                    android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/rankTierChip"
+                    style="@style/Widget.RiftTracker.Chip.Rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xxs"
+                    android:text="Diamante"
+                    android:textColor="@color/rift_on_accent"
+                    app:chipBackgroundColor="@color/rank_diamond" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/rankPdl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 PDL"
+                android:textAppearance="@style/TextAppearance.RiftTracker.StatValue" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/rankRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="0V 0D · 0 partidas"
+            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+
+        <LinearLayout
+            style="@style/Widget.RiftTracker.WinrateBar"
+            android:layout_marginTop="@dimen/spacing_xs">
+
+            <View
+                android:id="@+id/rankWinSegment"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/rift_win" />
+
+            <View
+                android:id="@+id/rankLossSpacer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/rankWinrateLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="0% de vitórias"
+            android:textColor="@color/rift_win"
+            android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hairline_width"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:background="@color/rift_hairline" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/rankQueueSecondary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Flexível 5v5"
+                android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/rankTierChipSecondary"
+                style="@style/Widget.RiftTracker.Chip.Rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Esmeralda"
+                android:textColor="@color/rift_on_accent"
+                app:chipBackgroundColor="@color/rank_emerald" />
+
+            <TextView
+                android:id="@+id/rankPdlSecondary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_sm"
+                android:text="0 PDL"
+                android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

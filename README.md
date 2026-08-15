@@ -275,19 +275,31 @@ BottomSheetBehavior.from(binding.sheet).state = BottomSheetBehavior.STATE_COLLAP
 
 O resto (arrastar, soltar, fling por velocidade) é o Android que faz — não é preciso escrever nenhum `PointerEvent`/spring manual, como no mockup web.
 
-## Cobertura: o que tem e o que falta
+## Cobertura: componentes de Perfil e Campeões
 
-O design system cobre a tela de Busca (Sprint 1) de ponta a ponta: input, botão, chips de região, card de lista. As telas de Perfil (Sprint 2/3) e Campeões (Sprint 5) do mockup usam alguns componentes que **ainda não foram formalizados como style reutilizável** aqui — hoje só existem como XML solto dentro dos protótipos, não como algo com nome que você pode aplicar via `style="@style/..."`:
+Além da tela de Busca (Sprint 1), o design system também cobre os componentes usados nas telas de Perfil (Sprint 2/3) e Campeões (Sprint 5). Todos com exemplo na vitrine Android (`DesignSystemPreviewActivity` / módulo `:sample`).
 
-- **Card de rank** — ícone de escudo, chip de tier + PDL, barra de proporção vitória/derrota
-- **Card de partida** — borda colorida por resultado (vitória/derrota)
-- **Badge de tier de campeão** (S/A/B/C) — sistema de cor separado do rank de invocador, ainda sem token
-- **Stat card com ícone** (usado no card de rank e na ficha de campeão)
-- **Badge de habilidade** (P/Q/W/E/R)
-- **Bottom navigation** — sem menu XML nem style ainda
-- **Barra de winrate** (progress bar de duas cores)
+**Card de rank** — `<include layout="@layout/view_rank_card" />`. Traz ícone de fila, chip de tier, PDL, recorde e barra de winrate prontos; alimente os `id`s via ViewBinding (peso da barra é dado da feature, não dá pra fixar no design system):
 
-Isso não bloqueia começar a Sprint 1 — só significa que quem chegar em Perfil/Campeões vai precisar ou construir esses componentes na mão primeiro (feature-local, não na lib) ou pedir pra formalizar aqui antes.
+```kotlin
+binding.rankCardPreview.rankPdl.text = "68 PDL"
+binding.rankCardPreview.rankWinSegment.layoutParams =
+    (binding.rankCardPreview.rankWinSegment.layoutParams as LinearLayout.LayoutParams).apply {
+        weight = 55f
+    }
+```
+
+**Card de partida** — `MaterialCardView` com `style="@style/Widget.RiftTracker.CardView.Win"` ou `.Loss` (borda verde ou vermelha conforme o resultado).
+
+**Badge de tier de campeão** (S/A/B/C) — `TextView` com `style="@style/Widget.RiftTracker.TierBadge"` e `android:backgroundTint="@color/champ_tier_s"` (ou `_a`/`_b`/`_c`).
+
+**Stat card com ícone** — `<include layout="@layout/view_stat_card" />`, com `statIcon`/`statValue`/`statLabel`.
+
+**Badge de habilidade** (P/Q/W/E/R) — `TextView` com `style="@style/Widget.RiftTracker.AbilityBadge"`; a habilidade ativa usa `android:backgroundTint="@color/rift_accent"`.
+
+**Barra de winrate** — `LinearLayout` com `style="@style/Widget.RiftTracker.WinrateBar"` contendo dois `View`s com `layout_weight` (vitória/derrota) somando 100.
+
+**Bottom navigation** — `BottomNavigationView` com `style="@style/Widget.RiftTracker.BottomNavigationView"` e seu próprio `app:menu` (os itens de navegação são da feature, não do design system). Use `android:layout_height="@dimen/bottom_nav_height"` (altura fixa) em vez de `wrap_content` — dentro de um `NestedScrollView` o `wrap_content` mede com `UNSPECIFIED` e a view colapsa para 0dp.
 
 ## O que não tem equivalente direto
 

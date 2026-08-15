@@ -32,6 +32,13 @@
     <color name="rank_gold">#FFE7B155</color>
     <color name="rank_silver">#FFB9BEC9</color>
 
+    <!-- Tiers de força de campeão (S/A/B/C) — sistema de cor separado do
+         rank de invocador acima; não confundir os dois. -->
+    <color name="champ_tier_s">#FFE0A94E</color>
+    <color name="champ_tier_a">#FFE7C377</color>
+    <color name="champ_tier_b">#FF8A7AB8</color>
+    <color name="champ_tier_c">#FF8C93A6</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

@@ -26,6 +26,26 @@ class DesignSystemPreviewActivity : AppCompatActivity() {
         val sheetBehavior = BottomSheetBehavior.from(binding.sheet)
         sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
+        // dados de exemplo pro card de rank incluído — os mesmos números do
+        // mockup aprovado (68 PDL, 55% de vitórias), só pra vitrine mostrar
+        // algo plausível, não é dado de feature de verdade
+        binding.rankCardPreview.rankPdl.text = "68 PDL"
+        binding.rankCardPreview.rankRecord.text = "142V 118D · 260 partidas"
+        binding.rankCardPreview.rankWinSegment.layoutParams =
+            (binding.rankCardPreview.rankWinSegment.layoutParams as android.widget.LinearLayout.LayoutParams).apply {
+                weight = 55f
+            }
+        binding.rankCardPreview.rankLossSpacer.layoutParams =
+            (binding.rankCardPreview.rankLossSpacer.layoutParams as android.widget.LinearLayout.LayoutParams).apply {
+                weight = 45f
+            }
+        binding.rankCardPreview.rankWinrateLabel.text = "55% de vitórias"
+
+        binding.statCardWin.statValue.text = "61%"
+        binding.statCardWin.statLabel.text = "Vitórias"
+        binding.statCardDifficulty.statValue.text = "4/5"
+        binding.statCardDifficulty.statLabel.text = "Dificuldade"
+
         val rows = listOf(
             Triple("Cores", binding.itemColors, binding.headerColors to binding.detailColors),
             Triple("Tipografia", binding.itemTypography, binding.headerTypography to binding.detailTypography),
@@ -34,6 +54,15 @@ class DesignSystemPreviewActivity : AppCompatActivity() {
             Triple("Input", binding.itemInput, binding.headerInput to binding.detailInput),
             Triple("Chips de rank", binding.itemChipsRank, binding.headerChipsRank to binding.detailChipsRank),
             Triple("Chips de região", binding.itemChipsRegion, binding.headerChipsRegion to binding.detailChipsRegion),
+            Triple("Card de rank", binding.itemRankCard, binding.headerRankCard to binding.detailRankCard),
+            Triple("Card de partida", binding.itemMatchCard, binding.headerMatchCard to binding.detailMatchCard),
+            Triple(
+                "Componentes de campeão",
+                binding.itemChampionParts,
+                binding.headerChampionParts to binding.detailChampionParts,
+            ),
+            Triple("Barra de winrate", binding.itemWinrateBar, binding.headerWinrateBar to binding.detailWinrateBar),
+            Triple("Bottom navigation", binding.itemBottomNav, binding.headerBottomNav to binding.detailBottomNav),
             Triple("Bottom sheet", binding.itemBottomSheet, binding.headerBottomSheet to binding.detailBottomSheet),
         )
 

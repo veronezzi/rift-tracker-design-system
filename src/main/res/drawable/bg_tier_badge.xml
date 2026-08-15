@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Base do badge de tier de campeão (S/A/B/C) — um círculo. A cor é setada
+  por instância via android:backgroundTint (mesma ideia dos chips de rank:
+  a forma é do design system, a cor por tier é decisão de quem monta a tela).
+  Ver Widget.RiftTracker.TierBadge em styles.xml.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/white" />
+</shape>
