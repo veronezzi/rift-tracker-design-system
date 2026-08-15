@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Base do badge de habilidade (P/Q/W/E/R) — quadrado com canto arredondado.
+  Cor de fundo neutra por padrão (@color/rift_surface_variant); a habilidade
+  passiva usa Widget.RiftTracker.AbilityBadge.Passive (destaque em accent).
+  Ver styles.xml.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/rift_surface_variant" />
+    <corners android:radius="@dimen/corner_sm" />
+</shape>

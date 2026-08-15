@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rift Tracker — Vitrine interativa do design system</title>
+<style>
+  :root {
+    --bg: #0b0f1a;
+    --surface: #131829;
+    --surface-2: #1b2136;
+    --fg: #f5f6fa;
+    --muted: #9aa1b4;
+    --accent: #f0c24b;
+    --on-accent: #14100a;
+    --hairline: rgba(255, 255, 255, 0.08);
+    --rank-diamond: #58d6c9;
+    --rank-emerald: #35c77a;
+    --rank-platinum: #8fb6c7;
+    --rank-gold: #e7b155;
+    --rank-silver: #b9bec9;
+    --win: #3fbf76;
+    --loss: #e05a5a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  header { margin-bottom: 40px; }
+  .eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  h1 { margin: 8px 0 10px; font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 700; letter-spacing: -0.02em; }
+  .dek { max-width: 60ch; color: var(--muted); font-size: 1rem; line-height: 1.55; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; margin-top: 32px; }
+
+  .gallery-card {
+    -webkit-tap-highlight-color: transparent;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+    font: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transform: scale(1);
+    transition: transform 100ms ease-out, border-color 140ms ease;
+  }
+  .gallery-card:hover { border-color: rgba(255, 255, 255, 0.18); }
+  .gallery-card.is-pressed { transform: scale(0.97); }
+
+  .gallery-card-label { font-size: 0.78rem; font-weight: 700; letter-spacing: -0.005em; }
+  .gallery-card-hint { font-size: 0.66rem; color: var(--muted); }
+  .gallery-preview { display: flex; align-items: center; gap: 8px; min-height: 40px; flex-wrap: wrap; }
+
+  /* ---- shared component styles (mirror styles.xml) ---- */
+
+  .btn-primary, .btn-outlined {
+    -webkit-tap-highlight-color: transparent;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 11px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 90ms ease-out, background-color 100ms ease;
+  }
+  .btn-primary { background: var(--accent); color: var(--on-accent); border: none; }
+  .btn-outlined { background: transparent; color: var(--fg); border: 1px solid var(--hairline); }
+  .btn-primary.is-pressed, .btn-outlined.is-pressed { transform: scale(0.95); }
+
+  .demo-card {
+    background: var(--surface-2);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .demo-input {
+    background: var(--surface-2);
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+    padding: 12px 14px;
+    width: 100%;
+  }
+  .demo-input label { display: block; font-size: 0.66rem; color: var(--muted); margin-bottom: 4px; }
+  .demo-input input {
+    background: transparent; border: none; outline: none; color: var(--fg);
+    font-size: 0.9rem; width: 100%; font-family: inherit;
+  }
+
+  .rank-pill { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.02em; padding: 3px 9px; border-radius: 7px; color: var(--on-accent); }
+
+  .region-chip {
+    -webkit-tap-highlight-color: transparent;
+    font-size: 0.72rem; font-weight: 700;
+    padding: 8px 14px; border-radius: 9px;
+    background: var(--surface-2); color: var(--fg);
+    border: 1px solid var(--hairline);
+    cursor: pointer;
+    transform: scale(1);
+    transition: transform 90ms ease-out, background-color 120ms ease, color 120ms ease;
+  }
+  .region-chip.is-pressed { transform: scale(0.94); }
+  .region-chip.is-checked { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+
+  .sheet-demo-stage {
+    position: relative;
+    height: 220px;
+    background: var(--surface-2);
+    border: 1px solid var(--hairline);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .sheet-demo-scrim {
+    position: absolute; inset: 0; background: #000; opacity: 0;
+    pointer-events: none; transition: opacity 200ms ease;
+  }
+  .sheet-demo-scrim.is-visible { opacity: 0.5; pointer-events: auto; }
+  .sheet-demo-sheet {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: var(--surface); border-top: 1px solid var(--hairline);
+    border-radius: 16px 16px 0 0;
+    padding: 14px 16px 18px;
+    transform: translateY(100%);
+    transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .sheet-demo-sheet.is-open { transform: translateY(0); }
+  .sheet-demo-handle { width: 32px; height: 4px; border-radius: 3px; background: var(--muted); margin: 0 auto 12px; }
+  .sheet-demo-open-btn {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  }
+
+  /* ---- modal ---- */
+
+  .backdrop {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6);
+    display: none; align-items: center; justify-content: center;
+    padding: 24px; z-index: 100;
+  }
+  .backdrop.is-open { display: flex; }
+
+  .modal {
+    background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: 18px; max-width: 560px; width: 100%;
+    max-height: 88vh; overflow-y: auto;
+    padding: 24px;
+  }
+
+  .modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+  .modal-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.01em; }
+  .modal-desc { font-size: 0.82rem; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+  .modal-close {
+    -webkit-tap-highlight-color: transparent;
+    flex: none; width: 30px; height: 30px; border-radius: 9px;
+    background: var(--surface-2); border: 1px solid var(--hairline); color: var(--fg);
+    cursor: pointer; font-size: 1rem; line-height: 1;
+    transform: scale(1); transition: transform 90ms ease-out;
+  }
+  .modal-close.is-pressed { transform: scale(0.9); }
+
+  .modal-section-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 20px 0 10px; }
+
+  .modal-preview {
+    background: var(--bg); border: 1px solid var(--hairline); border-radius: 14px;
+    padding: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+
+  .modal-code-wrap { position: relative; }
+  .modal-code {
+    background: #05070c; border: 1px solid var(--hairline); border-radius: 12px;
+    padding: 14px 16px; font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.72rem; line-height: 1.55; color: #cfe0d8;
+    white-space: pre; overflow-x: auto;
+  }
+  .modal-code .tag { color: #7fb3e0; }
+  .modal-code .attr { color: #e0b46a; }
+  .modal-code .val { color: #9fd68c; }
+
+  .copy-btn {
+    -webkit-tap-highlight-color: transparent;
+    position: absolute; top: 8px; right: 8px;
+    background: var(--surface-2); border: 1px solid var(--hairline); color: var(--fg);
+    font-size: 0.64rem; font-weight: 600; padding: 5px 9px; border-radius: 7px;
+    cursor: pointer; transform: scale(1); transition: transform 90ms ease-out;
+  }
+  .copy-btn.is-pressed { transform: scale(0.93); }
+  .copy-btn.is-copied { background: var(--win); color: #05130a; border-color: var(--win); }
+
+  footer.credits {
+    margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--hairline);
+    font-size: 0.75rem; color: var(--muted);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  }
+  footer.credits a { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Vitrine interativa</span>
+    <h1>Design system — teste os componentes</h1>
+    <p class="dek">
+      Toque em qualquer componente pra interagir com ele de verdade (botão reage
+      ao toque, chip seleciona, input aceita texto, sheet arrasta) e ver o XML
+      exato pra usar no app. É a mesma aparência dos componentes reais em
+      <code>res/values/</code> do <a href="https://github.com/veronezzi/rift-tracker" style="color:inherit">rift-tracker</a>.
+    </p>
+  </header>
+
+  <div class="grid" id="gallery"></div>
+
+  <footer class="credits">
+    <span>Rift Tracker — Design System</span>
+    <span><a href="../README.md">Ver documentação completa</a></span>
+  </footer>
+</div>
+
+<div class="backdrop" id="backdrop">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modalTitle"></div>
+        <div class="modal-desc" id="modalDesc"></div>
+      </div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+
+    <div class="modal-section-label">Interaja</div>
+    <div class="modal-preview" id="modalPreview"></div>
+
+    <div class="modal-section-label">Uso</div>
+    <div class="modal-code-wrap">
+      <button class="copy-btn" id="copyBtn">Copiar</button>
+      <pre class="modal-code" id="modalCode"></pre>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  function wirePress(el, onCommit) {
+    el.addEventListener('pointerdown', function () { el.classList.add('is-pressed'); });
+    function release() { el.classList.remove('is-pressed'); }
+    el.addEventListener('pointerup', function () { release(); if (onCommit) onCommit(); });
+    el.addEventListener('pointercancel', release);
+    el.addEventListener('pointerleave', release);
+  }
+
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // very small highlighter: tag names, attribute names, attribute values
+  function highlightXml(code) {
+    var esc = escapeHtml(code);
+    esc = esc.replace(/(&lt;\/?[\w.:]+)/g, '<span class="tag">$1</span>');
+    esc = esc.replace(/([\w:]+)=(&quot;.*?&quot;|"[^"]*")/g, '<span class="attr">$1</span>=<span class="val">$2</span>');
+    return esc;
+  }
+
+  var COMPONENTS = [
+    {
+      id: 'button-primary',
+      label: 'Botão primário',
+      hint: 'Widget.RiftTracker.Button.Primary',
+      renderGallery: function (host) {
+        var b = document.createElement('button');
+        b.className = 'btn-primary';
+        b.textContent = 'Buscar invocador';
+        host.appendChild(b);
+      },
+      title: 'Botão primário',
+      desc: 'É o materialButtonStyle padrão do tema — qualquer <Button>/MaterialButton já nasce assim, sem precisar de style=.',
+      renderPreview: function (host) {
+        var b = document.createElement('button');
+        b.className = 'btn-primary';
+        b.textContent = 'Buscar invocador';
+        wirePress(b);
+        host.appendChild(b);
+      },
+      code: '<com.google.android.material.button.MaterialButton\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content"\n    android:text="Buscar invocador" />'
+    },
+    {
+      id: 'button-outlined',
+      label: 'Botão secundário',
+      hint: 'Widget.RiftTracker.Button.Outlined',
+      renderGallery: function (host) {
+        var b = document.createElement('button');
+        b.className = 'btn-outlined';
+        b.textContent = 'Tentar novamente';
+        host.appendChild(b);
+      },
+      title: 'Botão secundário (outlined)',
+      desc: 'Ação de menor ênfase — "Tentar novamente" num erro, "Atualizar" numa topbar.',
+      renderPreview: function (host) {
+        var b = document.createElement('button');
+        b.className = 'btn-outlined';
+        b.textContent = 'Tentar novamente';
+        wirePress(b);
+        host.appendChild(b);
+      },
+      code: '<com.google.android.material.button.MaterialButton\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content"\n    android:text="Tentar novamente"\n    style="@style/Widget.RiftTracker.Button.Outlined" />'
+    },
+    {
+      id: 'card',
+      label: 'Card',
+      hint: 'Widget.RiftTracker.CardView',
+      renderGallery: function (host) {
+        var c = document.createElement('div');
+        c.className = 'demo-card';
+        c.textContent = 'Elevação 0 — separa por hairline, não sombra';
+        host.appendChild(c);
+      },
+      title: 'Card',
+      desc: 'Linha de lista, cartão de estatística. Elevação 0 de propósito: a separação vem do hairline e do contraste de cor.',
+      renderPreview: function (host) {
+        var c = document.createElement('div');
+        c.className = 'demo-card';
+        c.style.color = 'var(--fg)';
+        c.textContent = 'Conteúdo do card aqui.';
+        host.appendChild(c);
+      },
+      code: '<com.google.android.material.card.MaterialCardView\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content">\n\n    <TextView\n        android:layout_width="match_parent"\n        android:layout_height="wrap_content"\n        android:padding="@dimen/spacing_lg"\n        android:text="..." />\n</com.google.android.material.card.MaterialCardView>'
+    },
+    {
+      id: 'input',
+      label: 'Input',
+      hint: 'Widget.RiftTracker.TextInputLayout',
+      renderGallery: function (host) {
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-input';
+        wrap.style.width = '100%';
+        wrap.innerHTML = '<label>Riot ID</label>';
+        var input = document.createElement('input');
+        input.value = 'Faker#KR1';
+        wrap.appendChild(input);
+        host.appendChild(wrap);
+      },
+      title: 'Input',
+      desc: 'Campo de busca do Riot ID. Digite pra testar — é um <input> de verdade nesta vitrine.',
+      renderPreview: function (host) {
+        var wrap = document.createElement('div');
+        wrap.className = 'demo-input';
+        wrap.style.width = '100%';
+        wrap.innerHTML = '<label>Riot ID</label>';
+        var input = document.createElement('input');
+        input.placeholder = 'Nome#TAG';
+        wrap.appendChild(input);
+        host.appendChild(wrap);
+        setTimeout(function () { input.focus(); }, 50);
+      },
+      code: '<com.google.android.material.textfield.TextInputLayout\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content"\n    android:hint="Riot ID">\n\n    <com.google.android.material.textfield.TextInputEditText\n        android:layout_width="match_parent"\n        android:layout_height="wrap_content" />\n</com.google.android.material.textfield.TextInputLayout>'
+    },
+    {
+      id: 'chip-rank',
+      label: 'Chip de rank',
+      hint: 'Widget.RiftTracker.Chip.Rank',
+      renderGallery: function (host) {
+        ['Diamante', 'Ouro'].forEach(function (name, i) {
+          var p = document.createElement('span');
+          p.className = 'rank-pill';
+          p.style.background = i === 0 ? 'var(--rank-diamond)' : 'var(--rank-gold)';
+          p.textContent = name;
+          host.appendChild(p);
+        });
+      },
+      title: 'Chip de rank',
+      desc: 'A forma e a tipografia são do design system; a cor vem de fora — quem monta a tela mapeia o tier da Riot API pro rank_* certo.',
+      renderPreview: function (host) {
+        [
+          ['Diamante', 'var(--rank-diamond)'],
+          ['Esmeralda', 'var(--rank-emerald)'],
+          ['Platina', 'var(--rank-platinum)'],
+          ['Ouro', 'var(--rank-gold)'],
+          ['Prata', 'var(--rank-silver)']
+        ].forEach(function (pair) {
+          var p = document.createElement('span');
+          p.className = 'rank-pill';
+          p.style.background = pair[1];
+          p.textContent = pair[0];
+          host.appendChild(p);
+        });
+      },
+      code: '<com.google.android.material.chip.Chip\n    style="@style/Widget.RiftTracker.Chip.Rank"\n    android:layout_width="wrap_content"\n    android:layout_height="wrap_content"\n    android:text="Diamante"\n    android:textColor="@color/rift_on_accent"\n    app:chipBackgroundColor="@color/rank_diamond" />'
+    },
+    {
+      id: 'chip-region',
+      label: 'Chip de região',
+      hint: 'Widget.RiftTracker.Chip.Region — selecionável',
+      renderGallery: function (host) {
+        ['BR', 'KR'].forEach(function (r, i) {
+          var c = document.createElement('span');
+          c.className = 'region-chip' + (i === 1 ? ' is-checked' : '');
+          c.textContent = r;
+          host.appendChild(c);
+        });
+      },
+      title: 'Chip de região',
+      desc: 'Selecionável — toque em qualquer uma pra ver o estado marcado trocar de cor sozinho (res/color/chip_region_background.xml).',
+      renderPreview: function (host) {
+        var regions = ['BR', 'NA', 'EUW', 'EUNE', 'KR'];
+        var chips = [];
+        regions.forEach(function (r, i) {
+          var c = document.createElement('button');
+          c.className = 'region-chip' + (i === 4 ? ' is-checked' : '');
+          c.textContent = r;
+          chips.push(c);
+          wirePress(c, function () {
+            chips.forEach(function (o) { o.classList.remove('is-checked'); });
+            c.classList.add('is-checked');
+          });
+          host.appendChild(c);
+        });
+      },
+      code: '<com.google.android.material.chip.ChipGroup\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content"\n    app:singleSelection="true">\n\n    <com.google.android.material.chip.Chip\n        style="@style/Widget.RiftTracker.Chip.Region"\n        android:layout_width="wrap_content"\n        android:layout_height="wrap_content"\n        android:checkable="true"\n        android:checked="true"\n        android:text="KR" />\n</com.google.android.material.chip.ChipGroup>'
+    },
+    {
+      id: 'bottom-sheet',
+      label: 'Bottom sheet',
+      hint: 'Widget.RiftTracker.BottomSheet',
+      renderGallery: function (host) {
+        var d = document.createElement('div');
+        d.style.fontSize = '0.72rem';
+        d.style.color = 'var(--muted)';
+        d.textContent = 'Toque pra abrir a demonstração ↗';
+        host.appendChild(d);
+      },
+      title: 'Bottom sheet',
+      desc: 'BottomSheetBehavior nativo do Material Components — fling por velocidade real de graça, sem física escrita na mão. Toque no botão pra abrir; toque no fundo escurecido ou arraste o traço pra fechar.',
+      renderPreview: function (host) {
+        host.style.padding = '0';
+        host.style.display = 'block';
+        var stage = document.createElement('div');
+        stage.className = 'sheet-demo-stage';
+
+        var openBtn = document.createElement('button');
+        openBtn.className = 'btn-primary sheet-demo-open-btn';
+        openBtn.textContent = 'Abrir bottom sheet';
+
+        var scrim = document.createElement('div');
+        scrim.className = 'sheet-demo-scrim';
+
+        var sheet = document.createElement('div');
+        sheet.className = 'sheet-demo-sheet';
+        sheet.innerHTML = '<div class="sheet-demo-handle"></div>' +
+          '<div style="font-weight:700;font-size:0.85rem;">Detalhe da partida</div>' +
+          '<div style="font-size:0.72rem;color:var(--muted);margin-top:4px;">Arraste o traço ou toque fora pra fechar.</div>';
+
+        function open() { scrim.classList.add('is-visible'); sheet.classList.add('is-open'); }
+        function close() { scrim.classList.remove('is-visible'); sheet.classList.remove('is-open'); }
+
+        wirePress(openBtn, open);
+        scrim.addEventListener('pointerdown', close);
+        sheet.querySelector('.sheet-demo-handle').addEventListener('pointerdown', close);
+
+        stage.appendChild(scrim);
+        stage.appendChild(sheet);
+        stage.appendChild(openBtn);
+        host.appendChild(stage);
+      },
+      code: '<androidx.coordinatorlayout.widget.CoordinatorLayout\n    android:layout_width="match_parent"\n    android:layout_height="match_parent">\n\n    <!-- conteúdo normal da tela aqui -->\n\n    <LinearLayout\n        android:id="@+id/sheet"\n        style="@style/Widget.RiftTracker.BottomSheet"\n        android:layout_width="match_parent"\n        android:layout_height="match_parent"\n        android:orientation="vertical"\n        app:layout_behavior="@string/bottom_sheet_behavior">\n\n        <!-- conteúdo do sheet aqui -->\n    </LinearLayout>\n</androidx.coordinatorlayout.widget.CoordinatorLayout>'
+    }
+  ];
+
+  var gallery = document.getElementById('gallery');
+  var backdrop = document.getElementById('backdrop');
+  var modalTitle = document.getElementById('modalTitle');
+  var modalDesc = document.getElementById('modalDesc');
+  var modalPreview = document.getElementById('modalPreview');
+  var modalCode = document.getElementById('modalCode');
+  var copyBtn = document.getElementById('copyBtn');
+
+  function openModal(component) {
+    modalTitle.textContent = component.title;
+    modalDesc.textContent = component.desc;
+    modalPreview.innerHTML = '';
+    modalPreview.style.padding = '20px';
+    modalPreview.style.display = 'flex';
+    component.renderPreview(modalPreview);
+    modalCode.innerHTML = highlightXml(component.code);
+    copyBtn.classList.remove('is-copied');
+    copyBtn.textContent = 'Copiar';
+    backdrop.classList.add('is-open');
+  }
+
+  function closeModal() { backdrop.classList.remove('is-open'); }
+
+  COMPONENTS.forEach(function (component) {
+    var card = document.createElement('button');
+    card.className = 'gallery-card';
+    card.innerHTML = '<div class="gallery-preview"></div><div><div class="gallery-card-label">' +
+      component.label + '</div><div class="gallery-card-hint">' + component.hint + '</div></div>';
+    component.renderGallery(card.querySelector('.gallery-preview'));
+    wirePress(card, function () { openModal(component); });
+    gallery.appendChild(card);
+  });
+
+  wirePress(document.getElementById('modalClose'), closeModal);
+  backdrop.addEventListener('pointerdown', function (e) {
+    if (e.target === backdrop) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  wirePress(copyBtn, function () {
+    var text = modalCode.textContent;
+    navigator.clipboard.writeText(text).then(function () {
+      copyBtn.textContent = 'Copiado!';
+      copyBtn.classList.add('is-copied');
+      setTimeout(function () {
+        copyBtn.textContent = 'Copiar';
+        copyBtn.classList.remove('is-copied');
+      }, 1400);
+    });
+  });
+})();
+</script>
+</body>
+</html>

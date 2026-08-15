@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Stat card com ícone — usado no card de rank e na ficha de campeão
+  (ex.: Vitórias/Escolha/Banimento/Dificuldade). <include> este layout e
+  ajuste o ícone/valor/label via ViewBinding; ver README "Stat card".
+-->
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.RiftTracker.CardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/spacing_sm">
+
+        <ImageView
+            android:id="@+id/statIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_shield"
+            app:tint="@color/rift_on_surface_muted"
+            android:contentDescription="@null" />
+
+        <TextView
+            android:id="@+id/statValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxs"
+            android:text="0%"
+            android:textAppearance="@style/TextAppearance.RiftTracker.StatValue" />
+
+        <TextView
+            android:id="@+id/statLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Label"
+            android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Espaçamento: múltiplos de 4dp. Use estes em vez de valores soltos no XML. -->
+    <dimen name="spacing_xxs">4dp</dimen>
+    <dimen name="spacing_xs">6dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">12dp</dimen>
+    <dimen name="spacing_lg">16dp</dimen>
+    <dimen name="spacing_xl">24dp</dimen>
+    <dimen name="spacing_xxl">32dp</dimen>
+
+    <!-- Raio de canto -->
+    <dimen name="corner_xs">6dp</dimen>
+    <dimen name="corner_sm">8dp</dimen>
+    <dimen name="corner_md">12dp</dimen>
+    <dimen name="corner_lg">16dp</dimen>
+    <dimen name="corner_xl">22dp</dimen>
+
+    <!-- Traços -->
+    <dimen name="hairline_width">1dp</dimen>
+    <dimen name="stroke_width">1.5dp</dimen>
+
+    <!-- Tamanhos de componente -->
+    <dimen name="avatar_size_sm">34dp</dimen>
+    <dimen name="avatar_size_md">46dp</dimen>
+    <dimen name="icon_container_size">52dp</dimen>
+
+    <!-- Acessibilidade: alvo de toque mínimo (ver references/code-review.md /
+         ui-ux na skill loltracker-conventions) -->
+    <dimen name="touch_target_min">48dp</dimen>
+
+    <!-- Bottom sheet: altura visível quando "espiando" (peek), antes de
+         arrastar. Só o suficiente pro traço + nome/rank — as estatísticas
+         ficam escondidas até expandir, senão colapsado e expandido ficam
+         visualmente idênticos (o conteúdo inteiro já cabia no peek antigo
+         de 150dp). Ver Widget.RiftTracker.BottomSheet em styles.xml. -->
+    <dimen name="bottom_sheet_peek_height">48dp</dimen>
+
+    <!-- Altura da BottomNavigationView. Fixa em vez de wrap_content porque
+         dentro de um NestedScrollView (como na vitrine) o wrap_content mede
+         com UNSPECIFIED e a view colapsa para 0dp de altura — bug conhecido
+         do componente Material dentro de containers de scroll. -->
+    <dimen name="bottom_nav_height">80dp</dimen>
+</resources>

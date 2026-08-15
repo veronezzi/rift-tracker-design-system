@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Componentes do design system, todos em cima de Material Components
+      (com.google.android.material) — nunca crie um botão/card/input do zero,
+      estilize o widget que já existe. Ver docs/design-system.md.
+    -->
+
+    <!-- Botão principal: CTA cheio (ex.: "Buscar invocador"). -->
+    <style name="Widget.RiftTracker.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/rift_accent</item>
+        <item name="android:textColor">@color/rift_on_accent</item>
+        <item name="iconTint">@color/rift_on_accent</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.RiftTracker.Medium</item>
+        <item name="android:textAppearance">@style/TextAppearance.RiftTracker.ButtonLabel</item>
+        <item name="android:minHeight">@dimen/touch_target_min</item>
+        <item name="android:paddingStart">@dimen/spacing_xl</item>
+        <item name="android:paddingEnd">@dimen/spacing_xl</item>
+    </style>
+
+    <!-- Botão secundário: ação de menor ênfase (ex.: "Tentar novamente" num
+         estado de erro, "Atualizar" na topbar). -->
+    <style name="Widget.RiftTracker.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/rift_hairline</item>
+        <item name="android:textColor">@color/rift_on_surface</item>
+        <item name="iconTint">@color/rift_on_surface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.RiftTracker.Small</item>
+        <item name="android:textAppearance">@style/TextAppearance.RiftTracker.ButtonLabel</item>
+        <item name="android:minHeight">@dimen/touch_target_min</item>
+    </style>
+
+    <!-- Card padrão: linhas de lista, cartões de estatística. Elevação 0 —
+         a separação vem do contraste com o fundo e do hairline, não de sombra. -->
+    <style name="Widget.RiftTracker.CardView" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/rift_surface</item>
+        <item name="strokeColor">@color/rift_hairline</item>
+        <item name="strokeWidth">@dimen/hairline_width</item>
+        <item name="cardElevation">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.RiftTracker.Medium</item>
+    </style>
+
+    <!-- Campo de busca (Riot ID). -->
+    <style name="Widget.RiftTracker.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/rift_hairline</item>
+        <item name="boxStrokeWidth">@dimen/hairline_width</item>
+        <item name="boxBackgroundColor">@color/rift_surface</item>
+        <item name="hintTextColor">@color/rift_on_surface_muted</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.RiftTracker.Medium</item>
+        <item name="android:textColorHint">@color/rift_on_surface_muted</item>
+    </style>
+
+    <!-- Chip de rank (Diamante, Esmeralda...). A cor de fundo NÃO é fixa
+         aqui — quem monta a tela mapeia tier da Riot -> @color/rank_* e seta
+         app:chipBackgroundColor no código/layout da feature. -->
+    <style name="Widget.RiftTracker.Chip.Rank" parent="Widget.Material3.Chip.Assist">
+        <item name="shapeAppearance">@style/ShapeAppearance.RiftTracker.Pill</item>
+        <item name="android:textAppearance">@style/TextAppearance.RiftTracker.LabelUppercase</item>
+        <item name="chipMinHeight">22dp</item>
+        <item name="chipStartPadding">8dp</item>
+        <item name="chipEndPadding">8dp</item>
+        <item name="ensureMinTouchTargetSize">false</item>
+    </style>
+
+    <!-- Chip de região (BR, NA, EUW...), selecionável — o estado "selecionado"
+         usa a cor de destaque, sem precisar de mais uma cor no sistema. -->
+    <style name="Widget.RiftTracker.Chip.Region" parent="Widget.Material3.Chip.Filter">
+        <item name="shapeAppearance">@style/ShapeAppearance.RiftTracker.Small</item>
+        <item name="android:textAppearance">@style/TextAppearance.RiftTracker.ButtonLabel</item>
+        <item name="android:textColor">@color/chip_region_text</item>
+        <item name="chipBackgroundColor">@color/chip_region_background</item>
+        <item name="chipStrokeColor">@color/rift_hairline</item>
+        <item name="chipStrokeWidth">@dimen/hairline_width</item>
+        <item name="checkedIconVisible">false</item>
+    </style>
+
+    <!-- Card de partida: mesmo Widget.RiftTracker.CardView, só troca a cor
+         da borda pra sinalizar o resultado — o resto (elevação 0, raio de
+         canto) continua igual. -->
+    <style name="Widget.RiftTracker.CardView.Win">
+        <item name="strokeColor">@color/rift_win</item>
+        <item name="strokeWidth">@dimen/stroke_width</item>
+    </style>
+
+    <style name="Widget.RiftTracker.CardView.Loss">
+        <item name="strokeColor">@color/rift_loss</item>
+        <item name="strokeWidth">@dimen/stroke_width</item>
+    </style>
+
+    <!-- Badge de tier de campeão (S/A/B/C) — círculo pequeno, cor setada
+         por instância via android:backgroundTint (@color/champ_tier_*),
+         mesma ideia do chip de rank: forma é do design system, cor por
+         tier é decisão de quem monta a tela. -->
+    <style name="Widget.RiftTracker.TierBadge" parent="android:Widget">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">22dp</item>
+        <item name="android:background">@drawable/bg_tier_badge</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/rift_on_accent</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- Badge de habilidade (P/Q/W/E/R) — quadrado com canto arredondado. -->
+    <style name="Widget.RiftTracker.AbilityBadge" parent="android:Widget">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:background">@drawable/bg_ability_badge</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/rift_on_surface</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- Container da barra de winrate. O % de vitória/derrota é dado da
+         feature, não do design system — o segmento de vitória é uma View
+         filha com layout_weight setado por quem monta a tela (ver README:
+         "Barra de winrate" tem o exemplo completo com os dois segmentos). -->
+    <style name="Widget.RiftTracker.WinrateBar" parent="android:Widget">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">6dp</item>
+        <item name="android:background">@drawable/bg_progress_track</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- Bottom navigation: fundo de superfície, ícone/texto no accent quando
+         selecionado, indicador de seleção desligado (mantém o visual "chapado"
+         do resto do design system, sem pílula/glow atrás do ícone). -->
+    <style name="Widget.RiftTracker.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="android:background">@color/rift_surface</item>
+        <item name="itemIconTint">@color/bottom_nav_item</item>
+        <item name="itemTextColor">@color/bottom_nav_item</item>
+        <item name="itemRippleColor">@color/rift_hairline</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.RiftTracker.BottomNavigationView.NoIndicator</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="Widget.RiftTracker.BottomNavigationView.NoIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@android:color/transparent</item>
+    </style>
+
+    <!-- Bottom sheet arrastável (perfil/detalhe). Usa BottomSheetBehavior
+         nativo do Material Components — ele já entrega fling-to-nearest-state
+         com velocidade do gesto, que é exatamente o que a skill apple-design
+         pede; não reimplemente isso na mão. Ver docs/design-system.md. -->
+    <style name="Widget.RiftTracker.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="backgroundTint">@color/rift_surface</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.RiftTracker.SheetTop</item>
+        <item name="behavior_peekHeight">@dimen/bottom_sheet_peek_height</item>
+        <item name="behavior_hideable">true</item>
+        <item name="behavior_fitToContents">false</item>
+        <item name="behavior_halfExpandedRatio">0.55</item>
+    </style>
+</resources>
