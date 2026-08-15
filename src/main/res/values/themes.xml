@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+      Tema Material 3 (com.google.android.material), sem Compose. Dark-only
+      de propósito (parent .Dark, não .DayNight) — a identidade visual do
+      app é sempre escura, não é o modo escuro do sistema, então não existe
+      values-night. Ver docs/design-system.md.
+
+      Cada Widget.RiftTracker.* referenciado aqui vira o padrão de QUALQUER
+      Button/CardView/TextInputLayout/Chip que você adicionar, mesmo sem
+      setar style="..." na mão — é assim que o design system se propaga.
+    -->
+    <style name="Theme.RiftTracker" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/rift_accent</item>
+        <item name="colorOnPrimary">@color/rift_on_accent</item>
+        <item name="colorSecondary">@color/rift_accent</item>
+
+        <item name="android:colorBackground">@color/rift_bg</item>
+        <item name="colorOnBackground">@color/rift_on_surface</item>
+        <item name="colorSurface">@color/rift_surface</item>
+        <item name="colorOnSurface">@color/rift_on_surface</item>
+        <item name="colorSurfaceVariant">@color/rift_surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/rift_on_surface_muted</item>
+        <item name="colorOutline">@color/rift_hairline</item>
+
+        <item name="materialButtonStyle">@style/Widget.RiftTracker.Button.Primary</item>
+        <item name="materialCardViewStyle">@style/Widget.RiftTracker.CardView</item>
+        <item name="textInputStyle">@style/Widget.RiftTracker.TextInputLayout</item>
+        <item name="bottomSheetStyle">@style/Widget.RiftTracker.BottomSheet</item>
+    </style>
+</resources>

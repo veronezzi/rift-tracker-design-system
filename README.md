@@ -1,6 +1,6 @@
 # Rift Tracker — Design System
 
-Design system do [Rift Tracker](https://github.com/veronezzi/rift-tracker), um app Android de estudo pra acompanhar jogadores de League of Legends. Este repositório é a fonte de verdade dos tokens, componentes e da referência visual — a implementação em XML/Views vive no repo do app (`res/values/colors.xml`, `dimens.xml`, `type.xml`, `shapes.xml`, `styles.xml`, `themes.xml`), porque um recurso Android só compila dentro do módulo que o usa. Aqui fica a documentação, os exemplos de uso, os screenshots reais e o protótipo web que deu origem a tudo isso.
+Design system do [Rift Tracker](https://github.com/veronezzi/rift-tracker), um app Android de estudo pra acompanhar jogadores de League of Legends. **Este repositório é uma biblioteca Android de verdade** (`com.android.library`), publicada via JitPack — o rift-tracker consome ela como qualquer dependência de terceiro, não copia XML na mão. Aqui também fica a documentação, os exemplos de uso, os screenshots reais e o protótipo web que deu origem a tudo isso.
 
 A origem é um mockup web (skill `apple-design`, ver `prototypes/`) — este documento traduz aquele mockup pra Android/Views. Onde a tradução não é 1:1, está anotado abaixo.
 
@@ -8,20 +8,46 @@ A origem é um mockup web (skill `apple-design`, ver `prototypes/`) — este doc
 
 *Screenshot real do app rodando (`DesignSystemPreviewActivity`, ver seção "Vitrine" abaixo) — não é mockup.*
 
+## Como usar
+
+Em `settings.gradle.kts` do app consumidor:
+
+```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven(url = "https://jitpack.io")
+    }
+}
+```
+
+Em `app/build.gradle.kts`:
+
+```kotlin
+dependencies {
+    implementation("com.github.veronezzi:rift-tracker-design-system:1.0.0")
+}
+```
+
+Isso traz o Material Components junto (dependência `api` da lib) — não precisa declarar `com.google.android.material:material` de novo. O tema do app (`AndroidManifest.xml` → `android:theme="@style/Theme.RiftTracker"`) já resolve direto da lib.
+
+**Versionamento**: cada release aqui é uma tag Git (`vX.Y.Z`) — o JitPack builda a tag automaticamente na primeira vez que alguém pede aquela versão (pode levar um minuto). Ver [releases](https://github.com/veronezzi/rift-tracker-design-system/tags) e o [status de build no JitPack](https://jitpack.io/#veronezzi/rift-tracker-design-system).
+
 ## Vitrine web (`test-app/`)
 
 `test-app/index.html` é uma vitrine interativa que roda em qualquer navegador (sem Android Studio, sem emulador) — abra o arquivo direto. Cada componente é clicável: abre um painel com a versão de verdade pra você interagir (botão reage ao toque, chip seleciona, input aceita texto, bottom sheet arrasta) e o XML exato de uso, com botão de copiar.
 
 ## Vitrine Android (`DesignSystemPreviewActivity`)
 
-Todo componente descrito aqui também está montado numa tela só, no repo do app, que só existe em build debug (`app/src/debug/`) — não faz parte do app de produção nem do `nav_graph`. É o jeito de conferir visualmente um token ou um widget rodando de verdade no Android, não só a aproximação web.
+Todo componente descrito aqui também está montado numa tela só, embutida na própria lib (`src/main/`) — automaticamente disponível em qualquer app que a consome. Não tem ícone de launcher (pra não aparecer como um app separado pra quem instala o app consumidor); abra via adb:
 
 ```bash
-# a partir do clone de rift-tracker
-./gradlew installDebug
+adb shell am start -n <applicationId>/com.rifttracker.designsystem.DesignSystemPreviewActivity
+# ex.: adb shell am start -n com.rifttracker.loltracker/com.rifttracker.designsystem.DesignSystemPreviewActivity
 ```
 
-Depois abra o ícone **"Rift Tracker — Design System"** no launcher do emulador/dispositivo.
+**Por que não é debug-only:** uma dependência publicada via Maven só carrega **uma** variante (a `release`) — código em `src/debug/` da lib nunca chegaria no app consumidor, mesmo que ele esteja rodando em build debug. Variant-matching automático (debug da lib ↔ debug do app) só existe entre módulos do **mesmo build** (`implementation(project(":modulo"))`), não entre dependências externas publicadas. Por isso a Activity vive em `src/main/` e fica sempre presente, só sem ícone de launcher pra não vazar pra produção visualmente.
 
 ## Protótipo web (`prototypes/`)
 

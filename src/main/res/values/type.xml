@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Tipografia do design system. Sem fonte customizada — o mockup aprovado
+      usa a fonte do sistema (system-ui), então aqui é o equivalente Android:
+      a família padrão (Roboto), variando peso/tamanho/tracking por papel.
+      Ver docs/design-system.md.
+    -->
+
+    <style name="TextAppearance.RiftTracker.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:textColor">@color/rift_on_surface</item>
+    </style>
+
+    <style name="TextAppearance.RiftTracker.SheetTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.015</item>
+        <item name="android:textColor">@color/rift_on_surface</item>
+    </style>
+
+    <style name="TextAppearance.RiftTracker.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/rift_on_surface</item>
+    </style>
+
+    <style name="TextAppearance.RiftTracker.BodySmall" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/rift_on_surface_muted</item>
+    </style>
+
+    <!-- Rótulos tipo "REGIÃO", "BUSCAS RECENTES": maiúsculo, tracking aberto,
+         tamanho pequeno — nunca use isto num texto longo, tracking positivo
+         grande fica ilegível em corpo de texto. -->
+    <style name="TextAppearance.RiftTracker.LabelUppercase" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/rift_on_surface_muted</item>
+    </style>
+
+    <!-- Números que precisam alinhar em coluna (KDA, winrate, contagem de
+         partidas): algarismos tabulares, ver dataviz/typography-design. -->
+    <style name="TextAppearance.RiftTracker.StatValue" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+        <item name="android:textColor">@color/rift_on_surface</item>
+    </style>
+
+    <style name="TextAppearance.RiftTracker.ButtonLabel" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+</resources>

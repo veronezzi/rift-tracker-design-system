@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Moldura pro ícone dos estados de tela (sem conexão, não encontrado, vazio).
+  Ver docs/design-system.md — combine com um ImageView/ícone vetorial de
+  ~22dp centralizado por cima, tintado com ?attr/colorOnSurfaceVariant.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/rift_surface" />
+    <stroke
+        android:width="1.5dp"
+        android:color="@color/rift_hairline" />
+    <corners android:radius="16dp" />
+</shape>

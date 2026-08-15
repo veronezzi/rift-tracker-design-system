@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  DesignSystemPreviewActivity fica em src/main/, não src/debug/, de propósito:
+  uma dependência publicada via Maven só carrega UMA variante (a "release"),
+  então qualquer coisa em src/debug/ da lib nunca chegaria no app consumidor,
+  mesmo que ele esteja rodando em build debug — variant-matching automático
+  só existe entre módulos do mesmo build (project(":modulo")), não entre
+  dependências externas. Ver README.
+
+  Sem intent-filter de launcher de propósito, pra não aparecer como um app
+  separado na tela inicial de quem instala o app consumidor. `exported="true"`
+  é necessário pra abrir via adb (o shell não consegue iniciar uma activity
+  não exportada de outro app) — não é sensível, é só um catálogo visual:
+  adb shell am start -n <applicationId>/com.rifttracker.designsystem.DesignSystemPreviewActivity
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <activity
+            android:name=".DesignSystemPreviewActivity"
+            android:exported="true"
+            android:label="Rift Tracker — Design System"
+            android:theme="@style/Theme.RiftTracker" />
+    </application>
+</manifest>

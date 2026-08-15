@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Design system do Rift Tracker. Vem do mockup aprovado (skill apple-design,
+      ver docs/design-system.md) — o app é dark-only por identidade, não por
+      limitação técnica, então não existe variante values-night.
+    -->
+
+    <!-- Superfícies -->
+    <color name="rift_bg">#FF0B0F1A</color>
+    <color name="rift_surface">#FF131829</color>
+    <color name="rift_surface_variant">#FF1B2136</color>
+    <color name="rift_hairline">#14FFFFFF</color>
+
+    <!-- Texto -->
+    <color name="rift_on_surface">#FFF5F6FA</color>
+    <color name="rift_on_surface_muted">#FF9AA1B4</color>
+
+    <!-- Destaque (Hextech gold) -->
+    <color name="rift_accent">#FFF0C24B</color>
+    <color name="rift_on_accent">#FF14100A</color>
+
+    <!-- Resultado de partida -->
+    <color name="rift_win">#FF3FBF76</color>
+    <color name="rift_loss">#FFE05A5A</color>
+
+    <!-- Tiers de rank. Cor por rank é decisão de quem monta a tela (mapeia
+         tier da Riot -> cor), o design system só fornece o token. -->
+    <color name="rank_diamond">#FF58D6C9</color>
+    <color name="rank_emerald">#FF35C77A</color>
+    <color name="rank_platinum">#FF8FB6C7</color>
+    <color name="rank_gold">#FFE7B155</color>
+    <color name="rank_silver">#FFB9BEC9</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>
