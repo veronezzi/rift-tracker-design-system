@@ -1540,6 +1540,12 @@ var ASSETS = { champ: {"Taliyah":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA
     document.getElementById('champDetailMeta').textContent = champion.lane + ' · Tier ' + champion.tier;
     document.getElementById('champDetailDesc').textContent = detail.desc;
 
+    // a topbar compartilhada (modo "detail") também precisa saber que agora
+    // é a ficha do campeão, senão fica com o nome de quem foi visto por
+    // último no Perfil
+    document.getElementById('topbarName').textContent = champion.name;
+    document.getElementById('topbarRegion').textContent = detail.title;
+
     document.getElementById('champDetailStats').innerHTML = [
       { icon: 'win', value: champion.wr.toFixed(1) + '%', label: 'Vitórias' },
       { icon: 'pick', value: detail.pick.toFixed(1) + '%', label: 'Escolha' },
@@ -1582,7 +1588,9 @@ var ASSETS = { champ: {"Taliyah":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA
   renderChampionsGrid();
 
   // atalho só pra capturar screenshots de cada estado (não faz parte do app)
-  if (location.hash) {
+  if (location.hash === '#champion-detail') {
+    openChampionDetail(CHAMPIONS_GRID[0]);
+  } else if (location.hash) {
     goto(location.hash.slice(1));
   }
 })();
