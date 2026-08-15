@@ -30,6 +30,9 @@
     <dimen name="touch_target_min">48dp</dimen>
 
     <!-- Bottom sheet: altura visível quando "espiando" (peek), antes de
-         arrastar. Ver Widget.RiftTracker.BottomSheet em styles.xml. -->
-    <dimen name="bottom_sheet_peek_height">150dp</dimen>
+         arrastar. Só o suficiente pro traço + nome/rank — as estatísticas
+         ficam escondidas até expandir, senão colapsado e expandido ficam
+         visualmente idênticos (o conteúdo inteiro já cabia no peek antigo
+         de 150dp). Ver Widget.RiftTracker.BottomSheet em styles.xml. -->
+    <dimen name="bottom_sheet_peek_height">48dp</dimen>
 </resources>

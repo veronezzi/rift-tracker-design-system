@@ -40,7 +40,9 @@ Isso traz o Material Components junto (dependência `api` da lib) — não preci
 
 ## Vitrine Android (`DesignSystemPreviewActivity`)
 
-Todo componente descrito aqui também está montado numa tela só, embutida na própria lib (`src/main/`) — automaticamente disponível em qualquer app que a consome. Não tem ícone de launcher (pra não aparecer como um app separado pra quem instala o app consumidor); abra via adb:
+Todo componente descrito aqui também está montado numa tela só, embutida na própria lib (`src/main/`) — automaticamente disponível em qualquer app que a consome. Busca + lista de 8 componentes (Cores, Tipografia, Botões, Card, Input, Chips de rank, Chips de região, Bottom sheet) — tocar num item revela a prévia viva dele num acordeão, em vez de um scroll único mostrando tudo de uma vez. A linha "Bottom sheet" expande/colapsa o componente de verdade (não é só uma descrição em texto).
+
+Não tem ícone de launcher (pra não aparecer como um app separado pra quem instala o app consumidor); abra via adb:
 
 ```bash
 adb shell am start -n <applicationId>/com.rifttracker.designsystem.DesignSystemPreviewActivity
@@ -48,6 +50,16 @@ adb shell am start -n <applicationId>/com.rifttracker.designsystem.DesignSystemP
 ```
 
 **Por que não é debug-only:** uma dependência publicada via Maven só carrega **uma** variante (a `release`) — código em `src/debug/` da lib nunca chegaria no app consumidor, mesmo que ele esteja rodando em build debug. Variant-matching automático (debug da lib ↔ debug do app) só existe entre módulos do **mesmo build** (`implementation(project(":modulo"))`), não entre dependências externas publicadas. Por isso a Activity vive em `src/main/` e fica sempre presente, só sem ícone de launcher pra não vazar pra produção visualmente.
+
+## Módulo `:sample`
+
+Um app Android de exemplo de verdade — não é só a Activity da lib, é um `com.android.application` próprio (Single Activity + Fragment, ViewBinding, sem Compose) que builda e instala um APK, hospedando a mesma vitrine acima. Serve pra testar a lib como quem consome ela de fora, sem precisar do rift-tracker:
+
+```bash
+./gradlew :sample:installDebug
+```
+
+O `:sample` depende do módulo raiz via `project(":")` (não via JitPack) — mudanças na lib aparecem nele sem precisar publicar uma versão nova antes.
 
 ## Protótipo web (`prototypes/`)
 
@@ -228,10 +240,12 @@ Ver a seção dedicada logo abaixo.
 No mockup web, o cartão de perfil arrasta com spring físico escrito à mão (velocidade do gesto decide onde encaixar, pode ser agarrado no meio do movimento). No Android, **não reescreva essa física na mão** — `com.google.android.material.bottomsheet.BottomSheetBehavior` já entrega isso de graça: fling com velocidade real, estados (`STATE_COLLAPSED`/`STATE_HALF_EXPANDED`/`STATE_EXPANDED`/`STATE_HIDDEN`), e é o que qualquer app Android nativo (inclusive apps da própria Apple... quer dizer, Google) usa pra esse padrão.
 
 `Widget.RiftTracker.BottomSheet` já configura:
-- `behavior_peekHeight` = `bottom_sheet_peek_height` (o "espiando" inicial, equivalente ao estado `peek` do mockup)
+- `behavior_peekHeight` = `bottom_sheet_peek_height` (48dp — só a altura do traço + a primeira linha de conteúdo; calibrado pra ficar visualmente diferente do estado expandido, não pra já mostrar tudo colapsado)
 - `behavior_halfExpandedRatio` = 0.55 (equivalente ao estado `half`)
 - `behavior_hideable` = true (equivalente ao estado `hidden`)
 - cantos de cima arredondados (`ShapeAppearance.RiftTracker.SheetTop`)
+
+Se o conteúdo do seu sheet for diferente do exemplo (mais ou menos alto na primeira linha), `bottom_sheet_peek_height` provavelmente precisa de ajuste — meça a altura real com `adb shell uiautomator dump` em vez de chutar, foi assim que o valor de 48dp foi calibrado.
 
 **Uso** — o layout do sheet é um filho direto do `CoordinatorLayout`, com o resto da tela (a lista de busca, por exemplo) sendo o outro filho:
 
@@ -260,6 +274,20 @@ BottomSheetBehavior.from(binding.sheet).state = BottomSheetBehavior.STATE_COLLAP
 ```
 
 O resto (arrastar, soltar, fling por velocidade) é o Android que faz — não é preciso escrever nenhum `PointerEvent`/spring manual, como no mockup web.
+
+## Cobertura: o que tem e o que falta
+
+O design system cobre a tela de Busca (Sprint 1) de ponta a ponta: input, botão, chips de região, card de lista. As telas de Perfil (Sprint 2/3) e Campeões (Sprint 5) do mockup usam alguns componentes que **ainda não foram formalizados como style reutilizável** aqui — hoje só existem como XML solto dentro dos protótipos, não como algo com nome que você pode aplicar via `style="@style/..."`:
+
+- **Card de rank** — ícone de escudo, chip de tier + PDL, barra de proporção vitória/derrota
+- **Card de partida** — borda colorida por resultado (vitória/derrota)
+- **Badge de tier de campeão** (S/A/B/C) — sistema de cor separado do rank de invocador, ainda sem token
+- **Stat card com ícone** (usado no card de rank e na ficha de campeão)
+- **Badge de habilidade** (P/Q/W/E/R)
+- **Bottom navigation** — sem menu XML nem style ainda
+- **Barra de winrate** (progress bar de duas cores)
+
+Isso não bloqueia começar a Sprint 1 — só significa que quem chegar em Perfil/Campeões vai precisar ou construir esses componentes na mão primeiro (feature-local, não na lib) ou pedir pra formalizar aqui antes.
 
 ## O que não tem equivalente direto
 

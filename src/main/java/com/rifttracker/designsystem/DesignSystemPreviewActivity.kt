@@ -23,7 +23,8 @@ class DesignSystemPreviewActivity : AppCompatActivity() {
         binding = ActivityDesignSystemPreviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        BottomSheetBehavior.from(binding.sheet).state = BottomSheetBehavior.STATE_COLLAPSED
+        val sheetBehavior = BottomSheetBehavior.from(binding.sheet)
+        sheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
         val rows = listOf(
             Triple("Cores", binding.itemColors, binding.headerColors to binding.detailColors),
@@ -36,10 +37,19 @@ class DesignSystemPreviewActivity : AppCompatActivity() {
             Triple("Bottom sheet", binding.itemBottomSheet, binding.headerBottomSheet to binding.detailBottomSheet),
         )
 
-        rows.forEach { (_, _, headerAndDetail) ->
+        rows.forEach { (name, _, headerAndDetail) ->
             val (header, detail) = headerAndDetail
             header.setOnClickListener {
                 detail.visibility = if (detail.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+                // a linha "Bottom sheet" também expande/colapsa o componente de
+                // verdade — é o próprio componente sendo demonstrado, não só texto
+                if (name == "Bottom sheet") {
+                    sheetBehavior.state = if (sheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+                        BottomSheetBehavior.STATE_COLLAPSED
+                    } else {
+                        BottomSheetBehavior.STATE_EXPANDED
+                    }
+                }
             }
         }
 
