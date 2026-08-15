@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Vitrine de todo componente do design system, num só lugar, pra conferir
+  visualmente sem precisar montar uma tela de feature. Portado de
+  src/main/res/layout/activity_design_system_preview.xml (módulo :) pro
+  app de exemplo :sample, que builda e instala como APK de verdade.
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/rift_bg">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_lg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Design System"
+                android:textAppearance="@style/TextAppearance.RiftTracker.Title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xxs"
+                android:text="Rift Tracker — todo componente, num lugar só"
+                android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+
+            <!-- Cores -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Cores"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <View
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@color/rift_surface" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:text="rift_surface"
+                    android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <View
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@color/rift_surface_variant" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:text="rift_surface_variant"
+                    android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <View
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@color/rift_accent" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:text="rift_accent"
+                    android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <View
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@color/rift_win" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:text="rift_win"
+                    android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <View
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:background="@color/rift_loss" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:text="rift_loss"
+                    android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+            </LinearLayout>
+
+            <!-- Tipografia -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Tipografia"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="Faker#KR1"
+                android:textAppearance="@style/TextAppearance.RiftTracker.Title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="Faker#KR1"
+                android:textAppearance="@style/TextAppearance.RiftTracker.SheetTitle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="Estatísticas de League of Legends"
+                android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="Nenhuma conta encontrada nesta região"
+                android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="Buscas recentes"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="62%"
+                android:textAppearance="@style/TextAppearance.RiftTracker.StatValue" />
+
+            <!-- Botões -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Botões"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="Buscar invocador" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="Tentar novamente"
+                style="@style/Widget.RiftTracker.Button.Outlined" />
+
+            <!-- Card -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Card"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_lg"
+                    android:text="Widget.RiftTracker.CardView — elevação 0, separa por hairline e contraste de superfície"
+                    android:textAppearance="@style/TextAppearance.RiftTracker.Body" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Input -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Input"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:hint="Riot ID">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Faker#KR1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Chips de rank -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Chips de rank"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Diamante"
+                    android:textColor="@color/rift_on_accent"
+                    app:chipBackgroundColor="@color/rank_diamond" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Esmeralda"
+                    android:textColor="@color/rift_on_accent"
+                    app:chipBackgroundColor="@color/rank_emerald" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Platina"
+                    android:textColor="@color/rift_on_accent"
+                    app:chipBackgroundColor="@color/rank_platinum" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ouro"
+                    android:textColor="@color/rift_on_accent"
+                    app:chipBackgroundColor="@color/rank_gold" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prata"
+                    android:textColor="@color/rift_on_accent"
+                    app:chipBackgroundColor="@color/rank_silver" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Chips de região -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Chips de região"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:text="BR" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:text="KR" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:text="EUW" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.RiftTracker.Chip.Region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:text="NA" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Bottom sheet -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Bottom sheet"
+                android:textAppearance="@style/TextAppearance.RiftTracker.LabelUppercase" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:layout_marginBottom="@dimen/spacing_xxl"
+                android:text="Arraste o cartão no rodapé da tela — BottomSheetBehavior nativo, sem física escrita na mão."
+                android:textAppearance="@style/TextAppearance.RiftTracker.BodySmall" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Cartão de exemplo, arrastável pelo BottomSheetBehavior nativo. -->
+    <LinearLayout
+        android:id="@+id/sheet"
+        style="@style/Widget.RiftTracker.BottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/bottom_sheet_behavior">
+
+        <View
+            android:layout_width="36dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:background="@color/rift_on_surface_muted" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/spacing_lg">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Faker#KR1"
+                android:textAppearance="@style/TextAppearance.RiftTracker.SheetTitle" />
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.RiftTracker.Chip.Rank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diamante"
+                android:textColor="@color/rift_on_accent"
+                app:chipBackgroundColor="@color/rank_diamond" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/spacing_lg"
+            android:paddingEnd="@dimen/spacing_lg">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="62%"
+                android:textAppearance="@style/TextAppearance.RiftTracker.StatValue" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="4.8"
+                android:textAppearance="@style/TextAppearance.RiftTracker.StatValue" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="213"
+                android:textAppearance="@style/TextAppearance.RiftTracker.StatValue" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

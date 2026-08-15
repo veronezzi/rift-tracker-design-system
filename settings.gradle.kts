@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "rift-tracker-design-system"
+include(":sample")
