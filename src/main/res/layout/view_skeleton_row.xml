@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Placeholder de carregamento pra uma linha de lista (ex.: histórico de
+  partidas ou maestria antes da resposta da Riot API chegar). Blocos
+  reaproveitam os drawables que já existem (bg_tier_badge pro círculo do
+  ícone, com backgroundTint pra virar cinza; bg_ability_badge pras barras
+  retangulares, que já nascem com o canto arredondado certo) em vez de
+  criar drawable novo. <include> este layout e inicie o pulso com:
+
+  view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.skeleton_pulse))
+
+  Ver README "Skeleton de carregamento".
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/skeletonRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="@dimen/spacing_md">
+
+    <View
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_tier_badge"
+        android:backgroundTint="@color/rift_surface_variant" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/spacing_sm"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="120dp"
+            android:layout_height="14dp"
+            android:background="@drawable/bg_ability_badge" />
+
+        <View
+            android:layout_width="72dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:background="@drawable/bg_ability_badge" />
+    </LinearLayout>
+</LinearLayout>

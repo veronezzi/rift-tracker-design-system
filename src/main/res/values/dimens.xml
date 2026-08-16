@@ -23,6 +23,7 @@
     <!-- Tamanhos de componente -->
     <dimen name="avatar_size_sm">34dp</dimen>
     <dimen name="avatar_size_md">46dp</dimen>
+    <dimen name="avatar_size_lg">64dp</dimen>
     <dimen name="icon_container_size">52dp</dimen>
 
     <!-- Acessibilidade: alvo de toque mínimo (ver references/code-review.md /
