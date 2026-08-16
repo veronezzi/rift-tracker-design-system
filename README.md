@@ -26,7 +26,7 @@ Em `app/build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("com.github.veronezzi:rift-tracker-design-system:v1.0.1")
+    implementation("com.github.veronezzi:rift-tracker-design-system:v1.1.0")
 }
 ```
 
